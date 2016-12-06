@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="null">
+    <meta name="keyword" content="undefined">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="Simmin&#39;s Blog" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        自定义右键菜单学习｜undefined
+        
+    </title>
+
+    <link rel="canonical" href="http://yoursite.com/2016/07/22/contextmenu/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('undefined')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    Simmin&#39;s Blog
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>自定义右键菜单学习</h1>
+                    
+                    <span class="meta">
+                         作者 Simmin
+                        <span>
+                          日期 2016-07-22
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#JS"
+                           title="JS">JS</a>
+                        
+                        <a class="tag" href="/tags/#contextmenu"
+                           title="contextmenu">contextmenu</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            自定义右键菜单学习
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p><img src="contextmenu/pic0.png" alt="image"></p>
+<h3 id="【前言】"><a href="#【前言】" class="headerlink" title="【前言】"></a>【前言】</h3><p>   Q：为什么要自定义右键菜单？</p>
+<p>   A：为了更友好的交互（呵呵）</p>
+<a id="more"></a>
+<h3 id="【一般思路】"><a href="#【一般思路】" class="headerlink" title="【一般思路】"></a>【一般思路】</h3><p>  严格来讲，右键菜单应该叫上下文菜单，在html5中也新定义了这个contextmenu全局属性。<br>它的语法是这样的：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">contextmenu</span>=<span class="string">"supermenu"</span>&gt;</span>这个段落附加了一个名为 "supermenu" 的上下文菜单。<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">menu</span> <span class="attr">id</span>=<span class="string">"supermenu"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">command</span> <span class="attr">label</span>=<span class="string">"Step 1: Write Tutorial"</span> <span class="attr">onclick</span>=<span class="string">"doSomething()"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">command</span> <span class="attr">label</span>=<span class="string">"Step 2: Edit Tutorial"</span> <span class="attr">onclick</span>=<span class="string">"doSomethingElse()"</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">menu</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p><code>contextmenu</code> 属性规定元素的上下文菜单。当用户右键点击元素时，会出现上下文菜单。<br><code>contextmenu</code> 属性的值是要打开的<code>&lt;menu&gt;</code>元素的 id。<br>在这里，我注意到浏览器支持问题：<br><img src="contextmenu/pic1.png" alt="image"><br>!!!但是!<br><img src="contextmenu/pic2.png" alt="image"><br>在Firefox中并没有出现预想中的结果！<br>然后我发现下面这样可以实现：<br><img src="contextmenu/pic4.png" alt="image"></p>
+<p>所以这里要注意一下，</p>
+<blockquote>
+<p>①w3cschool上<code>&lt;menu&gt;</code>的子标签用的是<code>&lt;command&gt;</code>，是有问题的；菜鸟教程上用的是<code>&lt;menuitem&gt;</code>,亲测可行。</p>
+<p>②w3cschool上没有给<code>&lt;menu&gt;</code>加一个type属性,必须要加上type=”context”才能成功实现。</p>
+</blockquote>
+<p><img src="contextmenu/pic5.png" alt="image"></p>
+<p>更细致的关于menu和menuitem实现上下文菜单可以参考博文<a href="https://segmentfault.com/a/1190000002449360" target="_blank" rel="external">《利用HTML 5中的Menu和Menuitem元素快速创建菜单》</a></p>
+<p>可能大家也发现了，这个contextmenu属性只能在原有的上下文菜单上添加，而不能对原有的上下文菜单项进行删除等操作，这样是它的局限性。这时，就需要我们自己通过js来模拟右键点击出现上下文菜单。</p>
+<p>写过一段时间JS的都知道，我们实现这个上下文菜单大概这个思路：<br>写个ul列表(隐藏掉) -&gt; 监听鼠标右键事件 -&gt; 将ul列表显示出来</p>
+<p>但是，实现的时候，还需要注意几个细节，于是我将这个粗糙的思路细化了一下：</p>
+<p>(文中js代码都是基于jQuery的)</p>
+<h4 id="阻止浏览器默认右键菜单（上下文菜单）"><a href="#阻止浏览器默认右键菜单（上下文菜单）" class="headerlink" title="阻止浏览器默认右键菜单（上下文菜单）"></a>阻止浏览器默认右键菜单（上下文菜单）</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$(<span class="built_in">document</span>).bind(<span class="string">"contextmenu"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; <span class="keyword">return</span> <span class="literal">false</span>; &#125;);</div></pre></td></tr></table></figure>
+<h4 id="定义一个ul列表"><a href="#定义一个ul列表" class="headerlink" title="定义一个ul列表"></a>定义一个ul列表</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"display:none"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">ul</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>menuitem1<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>menuitem2<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>menuitem3<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>这里要注意列表的放置位置，跟上下文菜单作用的区域相关。</p>
+<h4 id="监听鼠标右键点击事件"><a href="#监听鼠标右键点击事件" class="headerlink" title="监听鼠标右键点击事件"></a>监听鼠标右键点击事件</h4><p>这里是根据事件对象的button值来判断的，比如mousedown的事件对象：<br><img src="contextmenu/pic6.png" alt="image"><br>由于click事件和mousedown事件很像，在这里将两者做一下比较：</p>
+<table>
+<thead>
+<tr>
+<th>鼠标事件</th>
+<th>button值</th>
+<th>事件描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> click</td>
+<td>0</td>
+<td>单击鼠标左键    </td>
+</tr>
+<tr>
+<td> click</td>
+<td>1</td>
+<td>单击鼠标中键    </td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td> mousedown</td>
+<td>0</td>
+<td>鼠标左键被按下  </td>
+</tr>
+<tr>
+<td> mousedown</td>
+<td>1</td>
+<td>鼠标中键被按下  </td>
+</tr>
+<tr>
+<td> mousedown</td>
+<td>2</td>
+<td>鼠标右键被按下  </td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>click事件只会在单击鼠标左键和中键时触发，单击右键时不会触发</p>
+</blockquote>
+<h4 id="给ul列表定位及显示"><a href="#给ul列表定位及显示" class="headerlink" title="给ul列表定位及显示"></a>给ul列表定位及显示</h4><p>之前我们提到列表的放置位置，就是为了更准确的给它定位。一般上下文菜单是显示在鼠标稍微右下角的地方，所有首先要定位当前鼠标的坐标。</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+<th>兼容性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>  clientX、clientY</td>
+<td>触发点相对<strong>浏览器可视区域</strong>左上角距离，不随页面滚动而改变</td>
+<td>所有浏览器均支持</td>
+</tr>
+<tr>
+<td>pageX、pageY</td>
+<td>触发点相对<strong>文档区域</strong>左上角距离，会随着页面滚动而改变</td>
+<td>IE6/7/8不支持</td>
+</tr>
+<tr>
+<td>offsetX、offsetY</td>
+<td>触发点相对被<strong>触发dom</strong>的左上角距离，不过左上角基准点在不同浏览器中有区别，其中在IE中以内容区左上角为基准点不包括边框，如果触发点在边框上会返回负值，而chrome中以边框左上角为基准点。</td>
+<td>IE所有版本，chrome，Safari均完美支持，Firefox不支持</td>
+</tr>
+<tr>
+<td>layerX、layerY</td>
+<td>触发点相对被<strong>触发dom</strong>左上角的距离，数值与offsetX/Y相同，这个变量就是<strong>firefox</strong>用来替代offsetX/Y的，基准点为边框左上角，但是有个条件就是，被触发的dom需要设置为position:relative或者position:absolute，否则会返回相对html文档区域左上角的距离</td>
+<td>IE6/7/8不支持，opera不支持，IE9/10和Chrome、Safari均支持</td>
+</tr>
+<tr>
+<td>screenX、screenY</td>
+<td>触发点相对<strong>显示器屏幕</strong>左上角的距离，不随页面滚动而改变</td>
+<td>所有浏览器均支持</td>
+</tr>
+</tbody>
+</table>
+<p><img src="contextmenu/pic7.png" alt="image"><br>选择给鼠标定位的参数，那么就选择相应的方式给ul列表定位。</p>
+<p>个人推荐使用pageX和pageY，因为我们最后给ul列表定位时，会用到<code>position:absolute</code>。绝对定位是相对于 static定位以外的第一个父元素进行定位。如果两者都是body定位的话，不容易出现定位失误。然后再<code>display：block</code>。</p>
+<blockquote>
+<p>多定义一个事件：鼠标左键点击页面，ul列表<code>display：none</code></p>
+</blockquote>
+<h3 id="【简单实现】"><a href="#【简单实现】" class="headerlink" title="【简单实现】"></a>【简单实现】</h3><p>代码：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"header"</span>&gt;</span>自定义右键菜单-example1<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">h1</span>&gt;</span>自定义右键菜单<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"btns"</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">button</span>&gt;</span>example-1<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">button</span>&gt;</span>example-2<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">button</span>&gt;</span>example-3<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">button</span>&gt;</span>example-4<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line"></div><div class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"contextMenu"</span> <span class="attr">style</span>=<span class="string">"display:none"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">ul</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span>&gt;</span>菜单一<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span>&gt;</span>菜单二<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span>&gt;</span>菜单三<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="javascript"></span></div><div class="line">    $(<span class="string">".btns button"</span>).mousedown(<span class="function"><span class="keyword">function</span>(<span class="params">params</span>)</span>&#123;</div><div class="line">        <span class="keyword">if</span>(params.button == <span class="number">2</span>)&#123;</div><div class="line">            $(<span class="built_in">document</span>).bind(<span class="string">'contextmenu'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="keyword">return</span> <span class="literal">false</span>;&#125;);</div><div class="line">            $(<span class="string">"#contextMenu"</span>).css(&#123;<span class="string">'top'</span>:params.pageY+<span class="string">'px'</span>,<span class="string">'left'</span>:params.pageX+<span class="string">'px'</span>&#125;);</div><div class="line">            $(<span class="string">"#contextMenu"</span>).show();</div><div class="line">        &#125;</div><div class="line">	&#125;);</div><div class="line">    $(<span class="string">"body"</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">        $(<span class="string">"#contextMenu"</span>).hide();</div><div class="line">    &#125;)</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>效果：<br><img src="contextmenu/pic8.png" alt="image"></p>
+<h3 id="【插件】"><a href="#【插件】" class="headerlink" title="【插件】"></a>【插件】</h3><p>事实上，大神早已为我们打造好了“神器”，请戳张鑫旭的<br><a href="http://www.zhangxinxu.com/wordpress/2011/05/jquery-smartmenu%E5%8F%B3%E9%94%AE%E8%87%AA%E5%AE%9A%E4%B9%89%E4%B8%8A%E4%B8%8B%E6%96%87%E8%8F%9C%E5%8D%95%E6%8F%92%E4%BB%B6/" target="_blank" rel="external">《jQuery smartMenu右键自定义上下文菜单插件》</a></p>
+<p>本文完</p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2016/07/22/JavaScript模块化编程学习笔记/" data-toggle="tooltip" data-placement="top"
+                           title="javascript模块化编程学习笔记">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2016/06/21/requirejs/" data-toggle="tooltip" data-placement="top"
+                           title="requireJs 初识">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#【前言】"><span class="toc-text">【前言】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#【一般思路】"><span class="toc-text">【一般思路】</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#阻止浏览器默认右键菜单（上下文菜单）"><span class="toc-text">阻止浏览器默认右键菜单（上下文菜单）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#定义一个ul列表"><span class="toc-text">定义一个ul列表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#监听鼠标右键点击事件"><span class="toc-text">监听鼠标右键点击事件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#给ul列表定位及显示"><span class="toc-text">给ul列表定位及显示</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#【简单实现】"><span class="toc-text">【简单实现】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#【插件】"><span class="toc-text">【插件】</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Simmin&#39;s Blog 2016
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://yoursite.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','undefined','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="undefined">
+</body>
+
+</html>

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="null">
+    <meta name="keyword" content="undefined">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="Simmin&#39;s Blog" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        requireJs 初识｜undefined
+        
+    </title>
+
+    <link rel="canonical" href="http://yoursite.com/2016/06/21/requirejs/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('undefined')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    Simmin&#39;s Blog
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>requireJs 初识</h1>
+                    
+                    <span class="meta">
+                         作者 Simmin
+                        <span>
+                          日期 2016-06-21
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#JS模块化"
+                           title="JS模块化">JS模块化</a>
+                        
+                        <a class="tag" href="/tags/#requireJs"
+                           title="requireJs">requireJs</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            requireJs 初识
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p><img src="requirejs/content.png" alt="require.js"></p>
+<h3 id="【前言】"><a href="#【前言】" class="headerlink" title="【前言】"></a>【前言】</h3><p>文章此次只是对requirejs进行一个初步的学习和总结。</p>
+<h3 id="【What】"><a href="#【What】" class="headerlink" title="【What】"></a>【What】</h3><ol>
+<li>非常小巧的JavaScript模块载入框架（模块加载器），只有14K</li>
+<li>基于AMD（Asynchronous Module Definition）规范</li>
+<li>官方地址是：<a href="http://www.requirejs.cn/" target="_blank" rel="external">http://www.requirejs.cn/</a> ，可以到该网址去下载最新的requirejs文件</li>
+</ol>
+<a id="more"></a>
+<h3 id="【Why】"><a href="#【Why】" class="headerlink" title="【Why】"></a>【Why】</h3><p>初学JavaScript，我们的代码是这样</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&lt;script type=<span class="string">"text/javascript"</span>&gt;</div><div class="line">  <span class="keyword">var</span> a = <span class="number">1</span>;</div><div class="line">  <span class="keyword">var</span> b = <span class="number">2</span>;</div><div class="line">  <span class="keyword">var</span> c = a * a + b * b;</div><div class="line"></div><div class="line">  <span class="keyword">if</span>(c&gt; <span class="number">1</span>) &#123;</div><div class="line">    alert(<span class="string">'c &gt; 1'</span>);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params">a, b</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> a + b;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  c = add(a,b);</div><div class="line"><span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></div></pre></td></tr></table></figure>
+<p>这样写看上去也没有什么问题，但对于一个网站的来说，代码的重用性，可维护性是非常重要的。于是我们将零散的代码写成各种函数，甚至封装成类，再引入到页面中。但这样也可能出现一个新的问题：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;script type=<span class="string">"text/javascript"</span> src=<span class="string">"a.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></div><div class="line">&lt;script type=<span class="string">"text/javascript"</span> src=<span class="string">"b.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></div><div class="line">&lt;script type=<span class="string">"text/javascript"</span> src=<span class="string">"c.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></div><div class="line">&lt;script type=<span class="string">"text/javascript"</span> src=<span class="string">"d.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></div><div class="line">&lt;script type=<span class="string">"text/javascript"</span> src=<span class="string">"e.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></div><div class="line">&lt;script type=<span class="string">"text/javascript"</span> src=<span class="string">"f.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></div><div class="line">&lt;script type=<span class="string">"text/javascript"</span> src=<span class="string">"g.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></div><div class="line">&lt;script type=<span class="string">"text/javascript"</span> src=<span class="string">"h.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></div><div class="line">&lt;script type=<span class="string">"text/javascript"</span> src=<span class="string">"i.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></div><div class="line">&lt;script type=<span class="string">"text/javascript"</span> src=<span class="string">"j.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></div></pre></td></tr></table></figure></p>
+<p>这样就显得页面js引入代码很臃肿，而且不便于处理js文件之间的依赖关系。</p>
+<p>requirejs除了可以帮助我们改善上面这两种状况，还可以防止js加载阻塞页面渲染。</p>
+<p>有时候，如果我们需要在head中引入js文件：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;html&gt;</div><div class="line"><span class="xml"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span></div><div class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"js/alert.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">h2</span>&gt;</span>This is for test alert.<span class="tag">&lt;/<span class="name">h2</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//alert.js</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">alertTest</span>(<span class="params"></span>)</span>&#123;</div><div class="line">	alert(<span class="number">123</span>);</div><div class="line">&#125;</div><div class="line"> alertTest();</div></pre></td></tr></table></figure>
+<p>测试结果（测试浏览器IE）：<br><img src="requirejs/result1.jpg" class="blockquote-center"></p>
+<p>当alert执行时，html内容并未渲染出来，而是点击“确定”之后，html的内容才被渲染。</p>
+<p><img src="requirejs/result2.jpg" class="blockquote-center"></p>
+<h3 id="【How】"><a href="#【How】" class="headerlink" title="【How】"></a>【How】</h3><p>使用requirejs 必须先引入require.js<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;script type=<span class="string">"text/javascript"</span> src=<span class="string">"require.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></div></pre></td></tr></table></figure></p>
+<h4 id="1-普通本地加载"><a href="#1-普通本地加载" class="headerlink" title="1.普通本地加载"></a>1.普通本地加载</h4><p>直接加载：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">require</span>([<span class="string">"a"</span>]);</div></pre></td></tr></table></figure></p>
+<p>带回调函数：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">require</span>([<span class="string">"js/a"</span>],<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    alert(<span class="string">"load finished"</span>);</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p>说明：require API的第一个参数为依赖数组，即使只有一个依赖，也必须使用数组形式。</p>
+<h4 id="2-外部请求加载"><a href="#2-外部请求加载" class="headerlink" title="2.外部请求加载"></a>2.外部请求加载</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">require</span>.config(&#123;</div><div class="line">    <span class="attr">paths</span> : &#123;</div><div class="line">        <span class="string">"jquery"</span> : [<span class="string">"http://libs.baidu.com/jquery/2.0.3/jquery"</span>]   </div><div class="line">    &#125;</div><div class="line">&#125;)</div><div class="line"><span class="built_in">require</span>([<span class="string">"jquery"</span>,<span class="string">"js/a"</span>],<span class="function"><span class="keyword">function</span>(<span class="params">$</span>)</span>&#123;</div><div class="line">    $(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">        alert(<span class="string">"load finished"</span>);  </div><div class="line">    &#125;)</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>先配置，后调用。<br>require.config 用于配置模块加载路径，并定义模块名字Module ID，方便后续调用。<br>RequireJS默认假定所有的依赖资源都是js脚本，因此无需在module ID上再加”.js”后缀。同时，路径部分也是以数组形式存在，以确保能够成功引入。</p>
+<p>回调函数中参数为依赖模块的输出变量，如上面例子中jquery依赖模块的输出变量$。</p>
+<h4 id="3-配置requirejs"><a href="#3-配置requirejs" class="headerlink" title="3.配置requirejs"></a>3.配置requirejs</h4><p><a href="http://www.runoob.com/w3cnote/requirejs-tutorial-1.html" target="_blank" rel="external">1</a> 全局配置<br>为了避免每个页面都使用require.config进行配置，requirejs提供了一种叫“主数据”的功能，首先创建一个main.js<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">require</span>.config(&#123;</div><div class="line">    <span class="attr">paths</span> : &#123;</div><div class="line">        <span class="string">"jquery"</span> : [<span class="string">"http://libs.baidu.com/jquery/2.0.3/jquery"</span>, <span class="string">"js/jquery"</span>],</div><div class="line">        <span class="string">"a"</span> : <span class="string">"js/a"</span>   </div><div class="line">    &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p>然后在页面中以如下方式使用requirejs<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;script data-main=<span class="string">"js/main"</span> src=<span class="string">"js/require.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></div></pre></td></tr></table></figure></p>
+<p>说明：<br>①使用data-main属性，这个属性指定的js将在require.js加载完成后执行，每个页面将使用相同的 require.config配置。<br>②指定data-main属性后，require会默认将data-main指定的js为根路径。</p>
+<p><a href="http://www.ruanyifeng.com/blog/2012/11/require_js.html" target="_blank" rel="external">2</a> require.config<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">require</span>.config(&#123;</div><div class="line">   <span class="attr">baseUrl</span>: <span class="string">"./js"</span>,</div><div class="line">   <span class="attr">paths</span>: &#123;</div><div class="line">       <span class="string">"some"</span>: <span class="string">"some/v1"</span></div><div class="line">   &#125;,</div><div class="line">   <span class="attr">waitSeconds</span>: <span class="number">15</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>baseUrl ：所有模块的查找根路径。<br>paths ：path映射那些不直接放置于baseUrl下的模块名。<br>waitSeconds ：指定最多花多长等待时间来加载一个JavaScript文件，用户不指定的情况下默认为7秒。</p>
+<p>更多config的配置参考官方文档：<a href="http://www.requirejs.cn/" target="_blank" rel="external">http://www.requirejs.cn/</a></p>
+<h4 id="4-定义JavaScript模块"><a href="#4-定义JavaScript模块" class="headerlink" title="4.定义JavaScript模块"></a>4.定义JavaScript模块</h4><p>这里的 JavaScript 模块与传统的 JavaScript 代码不一样的地方在于它无须访问全局的变量。模块化的设计使得 JavaScript 代码在需要访问”全局变量”的时候，都可以通过依赖关系，把这些”全局变量”作为参数传递到模块的实现体里，在实现中就避免了访问或者声明全局的变量或者函数，有效的避免大量而且复杂的命名空间管理。<br>require.js加载的模块，采用AMD规范。也就是说，模块必须按照AMD的规定来写。</p>
+<p>具体来说，就是模块必须采用特定的define()函数来定义。如果一个模块不依赖其他模块，那么可以直接定义在define()函数之中。</p>
+<p>假定现在有一个math.js文件，它定义了一个math模块。那么，math.js就要这样写：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">define(<span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</div><div class="line">　　<span class="keyword">var</span> add = <span class="function"><span class="keyword">function</span> (<span class="params">x,y</span>)</span>&#123;</div><div class="line">　　    <span class="keyword">return</span> x+y;</div><div class="line">　　&#125;;</div><div class="line">　　<span class="keyword">return</span> &#123;</div><div class="line">　　　　　　<span class="attr">add</span>: add</div><div class="line">　　&#125;;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>相应的，加载方法是这样：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">require</span>([<span class="string">'math'</span>], <span class="function"><span class="keyword">function</span> (<span class="params">math</span>)</span>&#123;</div><div class="line">　alert(math.add(<span class="number">1</span>,<span class="number">1</span>));</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>如果这个模块还依赖其他模块，那么define()函数的第一个参数，必须是一个数组，指明该模块的依赖性。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">define([<span class="string">'myLib'</span>], <span class="function"><span class="keyword">function</span>(<span class="params">myLib</span>)</span>&#123;</div><div class="line">　<span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;</div><div class="line">　　myLib.doSomething();</div><div class="line">　&#125;</div><div class="line">　<span class="keyword">return</span> &#123;</div><div class="line">　　<span class="attr">foo</span> : foo</div><div class="line">　&#125;;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>当require()函数加载上面这个模块的时候，就会先加载myLib.js文件。</p>
+<h3 id="【多说几句】"><a href="#【多说几句】" class="headerlink" title="【多说几句】"></a>【多说几句】</h3><p>1.require.js要求，每个模块是一个单独的js文件。这样的话，如果加载多个模块，就会发出多次HTTP请求，会影响网页的加载速度。因此，require.js提供了一个优化工具-RequireJS Optimizer（RequireJS优化器），当模块部署完毕以后，可以用这个工具将多个模块合并在一个文件中，减少HTTP请求数。</p>
+<p>2.有时候也会看到requirejs.config(),requirejs();其实requirejs === require</p>
+<p>3.有时候你想避开”baseUrl + paths”的解析过程，而是直接指定加载某一个目录下的脚本。此时可以这样做：如果一个module ID符合下述规则之一，其ID解析会避开常规的”baseUrl + paths”配置，而是直接将其加载为一个相对于当前HTML文档的脚本：<br>①以 “.js” 结束.<br>②以 “/“ 开始.<br>③包含 URL 协议, 如 “http:” or “https:”.</p>
+<h3 id="【总结-应用场景】"><a href="#【总结-应用场景】" class="headerlink" title="【总结-应用场景】"></a>【总结-应用场景】</h3><ol>
+<li>当一个页面需要加载多个JS文件</li>
+<li>当某一个JS文件需要引入另一个JS文件（非全局引入）</li>
+<li>当某一个JS文件需要依赖另一个JS文件</li>
+</ol>
+<p>【参考资料】</p>
+<ol>
+<li><a href="http://www.runoob.com/w3cnote/requirejs-tutorial-1.html" target="_blank" rel="external">JS模块化工具requirejs教程</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2012/11/require_js.html" target="_blank" rel="external">Javascript模块化编程（三）：require.js的用法</a></li>
+</ol>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2016/07/22/contextmenu/" data-toggle="tooltip" data-placement="top"
+                           title="自定义右键菜单学习">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2016/06/10/about-blog/" data-toggle="tooltip" data-placement="top"
+                           title="关于我和我的博客">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#【前言】"><span class="toc-text">【前言】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#【What】"><span class="toc-text">【What】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#【Why】"><span class="toc-text">【Why】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#【How】"><span class="toc-text">【How】</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-普通本地加载"><span class="toc-text">1.普通本地加载</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-外部请求加载"><span class="toc-text">2.外部请求加载</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-配置requirejs"><span class="toc-text">3.配置requirejs</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-定义JavaScript模块"><span class="toc-text">4.定义JavaScript模块</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#【多说几句】"><span class="toc-text">【多说几句】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#【总结-应用场景】"><span class="toc-text">【总结-应用场景】</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Simmin&#39;s Blog 2016
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://yoursite.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','undefined','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="undefined">
+</body>
+
+</html>

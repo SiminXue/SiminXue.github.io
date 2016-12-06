@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="null">
+    <meta name="keyword" content="undefined">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="Simmin&#39;s Blog" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        javaScript二叉树遍历｜undefined
+        
+    </title>
+
+    <link rel="canonical" href="http://yoursite.com/2016/10/10/javaScript二叉树遍历/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('undefined')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    Simmin&#39;s Blog
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>javaScript二叉树遍历</h1>
+                    
+                    <span class="meta">
+                         作者 Simmin
+                        <span>
+                          日期 2016-10-10
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#二叉树"
+                           title="二叉树">二叉树</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            javaScript二叉树遍历
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p><img src="b-tree.jpg" alt="二叉树"><br><a id="more"></a></p>
+<h3 id="二叉树相关知识复习"><a href="#二叉树相关知识复习" class="headerlink" title="二叉树相关知识复习"></a>二叉树相关知识复习</h3><p>参考文章：<a href="https://segmentfault.com/a/1190000000740261" target="_blank" rel="external">https://segmentfault.com/a/1190000000740261</a></p>
+<p><strong>二叉树</strong>，Binary Tree，是指每个节点最多有两个子树的树结构。通常子树被称作“左子树”（left subtree）和“右子树”（right subtree）。<br>二叉树的第i层至多有2^(i-1)个结点；深度为k的二叉树至多有2^k-1个结点</p>
+<p><strong>满二叉树</strong>：深度为k，且有2^k-1个节点</p>
+<p><strong>完全二叉树</strong>：深度为k，有n个节点的二叉树，当且仅当其每一个节点都与深度为k的满二叉树中，序号为1至n的节点对应。</p>
+<p><em>完全二叉树的特点</em>：</p>
+<p>①叶子结点只能出现在最下两层。</p>
+<p>②最下层的叶子一定集中在左部连续位置。</p>
+<p>③倒数第二层，若有叶子结点，一定都在右部连续位置。</p>
+<p>④如果结点度为1，则该结点只有左孩子。</p>
+<p>⑤同样结点树的二叉树，完全二叉树的深度最小。</p>
+<h3 id="二叉树的三种遍历方式"><a href="#二叉树的三种遍历方式" class="headerlink" title="二叉树的三种遍历方式"></a>二叉树的三种遍历方式</h3><p>（1）前序遍历（DLR），首先访问根结点，然后遍历左子树，最后遍历右子树。简记根-左-右。</p>
+<p>（2）中序遍历（LDR），首先遍历左子树，然后访问根结点，最后遍历右子树。简记左-根-右。</p>
+<p>（3）后序遍历（LRD），首先遍历左子树，然后遍历右子树，最后访问根结点。简记左-右-根。</p>
+<h3 id="三种遍历的javaScript实现"><a href="#三种遍历的javaScript实现" class="headerlink" title="三种遍历的javaScript实现"></a>三种遍历的javaScript实现</h3><p>树结构：<br><img src="nodes.png" alt="树结构"></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//二叉树前序遍历：根-左-右</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">front</span>(<span class="params">node</span>)</span>&#123;</div><div class="line">	<span class="keyword">if</span> (!(node == <span class="literal">null</span>)) &#123;</div><div class="line">		nodes.push(node);</div><div class="line">		front(node.firstElementChild);</div><div class="line">		front(node.lastElementChild);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">//二叉树中序遍历：左-根-右</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">center</span>(<span class="params">node</span>)</span>&#123;</div><div class="line">	<span class="keyword">if</span> (!(node == <span class="literal">null</span>)) &#123;</div><div class="line">		center(node.firstElementChild);</div><div class="line">		nodes.push(node);</div><div class="line">		center(node.lastElementChild);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"><span class="comment">//二叉树后序遍历：左-右-根</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">back</span>(<span class="params">node</span>)</span>&#123;</div><div class="line">	<span class="keyword">if</span> (!(node == <span class="literal">null</span>)) &#123;</div><div class="line">		back(node.firstElementChild);</div><div class="line">		back(node.lastElementChild);</div><div class="line">		nodes.push(node);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>补充 <code>firstElementChild</code> 和 <code>fristChild</code> 的区别：<br>firstElementChild:获取父节点下第一个元素节点对象，如果没有则返回null<br>firstChild:获取父节点下第一个节点对象（包括元素节点和文本结点）</p>
+</blockquote>
+<p>示例：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"node"</span>&gt;</span>这是文本<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="javascript"></span></div><div class="line">		<span class="keyword">var</span> theObj = <span class="built_in">document</span>.getElementById(<span class="string">'node'</span>);</div><div class="line">		<span class="built_in">console</span>.log(theObj.firstElementChild); <span class="comment">//null</span></div><div class="line">		<span class="built_in">console</span>.log(theObj.firstChild); <span class="comment">// "这是文本"</span></div><div class="line">	<span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>前序遍历实现效果：</p>
+<p><img src="front.gif" alt="前序遍历"></p>
+<p>中序遍历实现效果：</p>
+<p><img src="center.gif" alt="中序遍历"></p>
+<p>后序遍历实现效果：</p>
+<p><img src="back.gif" alt="后序遍历"></p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/2016/08/31/ES6全面来袭/" data-toggle="tooltip" data-placement="top"
+                           title="ES6全面来袭">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#二叉树相关知识复习"><span class="toc-text">二叉树相关知识复习</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二叉树的三种遍历方式"><span class="toc-text">二叉树的三种遍历方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三种遍历的javaScript实现"><span class="toc-text">三种遍历的javaScript实现</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Simmin&#39;s Blog 2016
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://yoursite.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','undefined','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="undefined">
+</body>
+
+</html>

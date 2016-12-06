@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="null">
+    <meta name="keyword" content="undefined">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="Simmin&#39;s Blog" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        javascript模块化编程学习笔记｜undefined
+        
+    </title>
+
+    <link rel="canonical" href="http://yoursite.com/2016/07/22/JavaScript模块化编程学习笔记/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('undefined')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    Simmin&#39;s Blog
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>javascript模块化编程学习笔记</h1>
+                    
+                    <span class="meta">
+                         作者 Simmin
+                        <span>
+                          日期 2016-07-22
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#JS"
+                           title="JS">JS</a>
+                        
+                        <a class="tag" href="/tags/#JS模块化"
+                           title="JS模块化">JS模块化</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            javascript模块化编程学习笔记
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <h3 id="【前言】"><a href="#【前言】" class="headerlink" title="【前言】"></a>【前言】</h3><p> 从开始接触JavaScript到现在也快两年了，一直是需要什么功能，便写什么代码，在这个过程中也一直缺乏归纳总结，代码的重用性和可维护性非常低。前段时间学习了一下requireJs，越发觉得JavaScript的模块化很重要，既能提高代码的重用性和可维护性，也使代码看起来整洁大方，心情愉悦呀~~~（废话真多！）</p>
+<p> 这次的学习笔记主要是根据阮一峰大神的博客来记录的</p>
+<p> <a href="http://www.ruanyifeng.com/blog/2012/10/javascript_module.html" target="_blank" rel="external">Javascript模块化编程（一）：模块的写法</a></p>
+<p> <a href="http://www.ruanyifeng.com/blog/2012/10/asynchronous_module_definition.html" target="_blank" rel="external">Javascript模块化编程（二）：AMD规范</a></p>
+<a id="more"></a>
+<h3 id="【模块知多少】"><a href="#【模块知多少】" class="headerlink" title="【模块知多少】"></a>【模块知多少】</h3><blockquote>
+<p>模块：实现特定功能的方法</p>
+</blockquote>
+<h4 id="原始写法"><a href="#原始写法" class="headerlink" title="原始写法"></a>原始写法</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">m1</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="comment">//...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">m2</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="comment">//...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>缺点：<br>①污染全局变量<br>②可能与其他模块发生命名冲突<br>③模块成员之间看不出直接关系</p>
+<h4 id="对象写法"><a href="#对象写法" class="headerlink" title="对象写法"></a>对象写法</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> module1 = <span class="keyword">new</span> <span class="built_in">Object</span>(&#123;</div><div class="line">　　<span class="attr">_count</span>:<span class="number">0</span>,</div><div class="line">　　<span class="attr">m1</span>:<span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</div><div class="line">　　　　<span class="comment">//...</span></div><div class="line">　　&#125;,</div><div class="line">　　<span class="attr">m2</span>:<span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</div><div class="line">　　　　<span class="comment">//...</span></div><div class="line">　　&#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>缺点：<br>①暴露所有模块成员<br>②内部状态可以被外部改写，例如：<strong>module1._count = 5</strong></p>
+<h4 id="立即执行函数"><a href="#立即执行函数" class="headerlink" title="立即执行函数"></a>立即执行函数</h4><blockquote>
+<p><code>立即执行函数</code>(Immediately-Invoked Function Expression，IIFE)</p>
+</blockquote>
+<p>(1) 基本写法<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> module1 = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">　　<span class="keyword">var</span> _count = <span class="number">0</span>;</div><div class="line">　　<span class="keyword">var</span> m1 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">　　　　　　<span class="comment">//...</span></div><div class="line">　　&#125;;</div><div class="line">　　<span class="keyword">var</span> m2 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">　　　　　　<span class="comment">//...</span></div><div class="line">　　&#125;;</div><div class="line">　　<span class="keyword">return</span> &#123;</div><div class="line">　　　　<span class="attr">m1</span> : m1,</div><div class="line">　　　　<span class="attr">m2</span> : m2</div><div class="line">　　&#125;;</div><div class="line">&#125;)();</div></pre></td></tr></table></figure></p>
+<p>优点：不暴露私有成员<br>函数语法说明：第一个（）将函数变成表达式，第二个（）执行了这个函数。<br>另一种改进的形式：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;())</div></pre></td></tr></table></figure></p>
+<p>两者功能一致。</p>
+<p>(2)放大模式</p>
+<blockquote>
+<p><code>放大模式</code>（augmentation），将它们作为函数调用并传递参数进去。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a=<span class="number">2</span>;</div><div class="line">(<span class="function"><span class="keyword">function</span> <span class="title">IIFE</span>(<span class="params">global</span>)</span>&#123;</div><div class="line"></div><div class="line">  <span class="keyword">var</span> a=<span class="number">3</span>;</div><div class="line">  <span class="built_in">console</span>.log(a); <span class="comment">//3</span></div><div class="line">  <span class="built_in">console</span>.log(global.a); <span class="comment">//2</span></div><div class="line"></div><div class="line">&#125;)(<span class="built_in">window</span>);</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(a); <span class="comment">//2</span></div></pre></td></tr></table></figure>
+<p>应用场景：<br>①模块较大，需要拆分成几个部分<br>②一个模块需要继承另一个模块<br>③为原有模块增加新方法<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> module1 = (<span class="function"><span class="keyword">function</span> (<span class="params">mod</span>)</span>&#123;</div><div class="line">　　mod.m3 = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">　　　　　<span class="comment">//...</span></div><div class="line">　　&#125;;</div><div class="line">　　<span class="keyword">return</span> mod;</div><div class="line">&#125;)(module1);</div></pre></td></tr></table></figure></p>
+<p>④倒置代码的运行顺序，将需要运行的函数放在第二位，在IIFE执行之后当做参数传递进去。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">(<span class="function"><span class="keyword">function</span> <span class="title">IIFE</span>(<span class="params">def</span>)</span>&#123;</div><div class="line">  def(<span class="built_in">window</span>);</div><div class="line">&#125;)(<span class="function"><span class="keyword">function</span> <span class="title">def</span>(<span class="params">global</span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> a =<span class="number">3</span>;</div><div class="line">  <span class="built_in">console</span>.log(a); <span class="comment">//3</span></div><div class="line">  <span class="built_in">console</span>.log(global.a); <span class="comment">//2</span></div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p>(3)宽放大模式</p>
+<blockquote>
+<p><code>宽放大模式</code>(Loose augmentation),”立即执行函数”的参数可以是空对象</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> module1 = ( <span class="function"><span class="keyword">function</span> (<span class="params">mod</span>)</span>&#123;</div><div class="line">　　　<span class="comment">//...</span></div><div class="line">　　　<span class="keyword">return</span> mod;</div><div class="line">&#125;)(<span class="built_in">window</span>.module1 || &#123;&#125;);</div></pre></td></tr></table></figure>
+<h3 id="【规范知多少】"><a href="#【规范知多少】" class="headerlink" title="【规范知多少】"></a>【规范知多少】</h3><p> 目前，通行的Javascript模块规范共有两种：CommonJS和AMD</p>
+<table>
+<thead>
+<tr>
+<th>规范</th>
+<th>代表</th>
+<th>应用于</th>
+<th>模式</th>
+<th>等待时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> CommonJS规范</td>
+<td>node.js</td>
+<td>服务器端</td>
+<td>同步加载(synchronous)</td>
+<td>取决于硬盘读取时间</td>
+</tr>
+<tr>
+<td> AMD规范</td>
+<td>requirejs等</td>
+<td>客户端</td>
+<td>异步加载(asynchronous)</td>
+<td>取决于网速的快慢</td>
+</tr>
+</tbody>
+</table>
+<p>CommonJS规范语法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> math = <span class="built_in">require</span>(<span class="string">'math'</span>);</div><div class="line">math.add(<span class="number">2</span>, <span class="number">3</span>);</div></pre></td></tr></table></figure>
+<p>AMD规范语法：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">require</span>([<span class="built_in">module</span>], callback);</div></pre></td></tr></table></figure></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">require</span>([<span class="string">'math'</span>], <span class="function"><span class="keyword">function</span> (<span class="params">math</span>) </span>&#123;</div><div class="line">　　math.add(<span class="number">2</span>, <span class="number">3</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>本文完</p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2016/08/31/ES6全面来袭/" data-toggle="tooltip" data-placement="top"
+                           title="ES6全面来袭">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2016/07/22/contextmenu/" data-toggle="tooltip" data-placement="top"
+                           title="自定义右键菜单学习">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#【前言】"><span class="toc-text">【前言】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#【模块知多少】"><span class="toc-text">【模块知多少】</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#原始写法"><span class="toc-text">原始写法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#对象写法"><span class="toc-text">对象写法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#立即执行函数"><span class="toc-text">立即执行函数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#【规范知多少】"><span class="toc-text">【规范知多少】</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Simmin&#39;s Blog 2016
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://yoursite.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','undefined','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="undefined">
+</body>
+
+</html>
