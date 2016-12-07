@@ -1089,7 +1089,7 @@ img::-moz-selection {
     height: 2px;
     position: absolute;
     width: 100%;
-    background: red;
+    background: black;
 }
 
 .navbar-custom.is-fixed .brand-logo {
