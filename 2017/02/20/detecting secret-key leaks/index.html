@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Simmin的个人博客">
+    <meta name="keyword" content="null">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="http://ohsqunbzi.bkt.clouddn.com/simmin/bg-img/favicon.png">
+    <link rel="alternate" type="application/atom+xml" title="Simmin" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        【文献阅读】Detecting and Mitigating Secret-Key Leaks in Source Code Repositories｜Simmin&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://simmin.github.io/2017/02/20/detecting secret-key leaks/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('http://ohsqunbzi.bkt.clouddn.com/blog-bg-black-run.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    Simmin
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/Tags/">Tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="http://ohsqunbzi.bkt.clouddn.com/simmin/bg-img/banner-bg.png">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('http://ohsqunbzi.bkt.clouddn.com/simmin/bg-img/banner-bg.png')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>【文献阅读】Detecting and Mitigating Secret-Key Leaks in Source Code Repositories</h1>
+                    
+                    <span class="meta">
+                         作者 Simmin
+                        <span>
+                          日期 2017-02-20
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#Secret-Key Leaks"
+                           title="Secret-Key Leaks">Secret-Key Leaks</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            【文献阅读】Detecting and Mitigating Secret-Key Leaks in Source Code Repositories
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p><img src="http://dassec.b0.upaiyun.com/simin/pic0.png" alt=""></p>
+<a id="more"></a>
+<h2 id="0x00-&#x6458;&#x8981;"><a href="#0x00-&#x6458;&#x8981;" class="headerlink" title="0x00 &#x6458;&#x8981;"></a>0x00 &#x6458;&#x8981;</h2><p>&#x3010;&#x6574;&#x6BB5;&#x7FFB;&#x8BD1;&#x3011;<br>&#x53BB;&#x5E74;&#x4E00;&#x4E9B;&#x65B0;&#x95FB;&#x6587;&#x7AE0;&#x5F3A;&#x8C03;&#xFF0C;&#x6076;&#x610F;&#x7528;&#x6237;&#x4F1A;&#x7A83;&#x53D6;&#x6258;&#x7BA1;&#x4E8E;&#x516C;&#x5171;&#x8D44;&#x6E90;&#x4ED3;&#x5E93;&#x7684;&#x6587;&#x4EF6;&#x4E2D;&#x5D4C;&#x5165;&#x7684;API keys&#xFF0C;&#x4EE5;&#x8FBE;&#x5230;&#x9A71;&#x52A8;&#x81EA;&#x5DF1;&#x7684;&#x5DE5;&#x4F5C;&#x8D1F;&#x8377;&#x7684;&#x76EE;&#x7684;&#x3002;<br>&#x4E00;&#x4E9B;&#x670D;&#x52A1;&#x63D0;&#x4F9B;&#x5546;&#xFF0C;&#x6BD4;&#x5982;&#x4E9A;&#x9A6C;&#x900A;&#xFF0C;&#x5DF2;&#x7ECF;&#x5F00;&#x59CB;&#x8BBE;&#x6CD5;&#x901A;&#x8FC7;&#x641C;&#x7D22;&#x516C;&#x5171;&#x4ED3;&#x5E93;&#x548C;&#x6682;&#x505C;&#x4F7F;&#x7528;&#x6CC4;&#x9732;&#x7684;API keys&#x6765;&#x53D1;&#x73B0;&#x8FD9;&#x4E9B;&#x5F00;&#x53D1;&#x8005;&#x7684;&#x7C97;&#x5FC3;&#x5927;&#x610F;&#x3002;<br>&#x4F46;&#x662F;&#xFF0C;&#x5374;&#x57FA;&#x672C;&#x6CA1;&#x6709;&#x4ECE;&#x6E90;&#x7801;&#x5171;&#x4EAB;&#x5E73;&#x53F0;&#x8DDF;&#x8E2A;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#x7684;&#x76F8;&#x5173;&#x652F;&#x6301;&#x3002;<br>&#x5728;&#x8FD9;&#x7BC7;&#x6587;&#x7AE0;&#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x8BA8;&#x8BBA;&#x4E86;&#x53EF;&#x5B9E;&#x73B0;&#x7684;&#x89E3;&#x51B3;&#x65B9;&#x6CD5;&#x6765;&#x68C0;&#x6D4B;&#xFF0C;&#x9884;&#x9632;&#x548C;&#x4FEE;&#x590D;API key&#x662F;&#x7684;&#x6CC4;&#x9732;&#x3002;&#x6211;&#x4EEC;&#x9996;&#x5148;&#x6982;&#x8FF0;&#x4E86;&#x51E0;&#x4E2A;&#x68C0;&#x6D4B;&#x5D4C;&#x5165;&#x5728;&#x6E90;&#x7801;&#x4E2D;&#x7684;API keys&#x7684;&#x65B9;&#x6CD5;&#xFF0C;<br>&#x5E76;&#x4E14;&#x7528;&#x6765;&#x81EA;&#x4E8E;GitHub&#x7684;&#x6837;&#x672C;&#x96C6;&#x8BC4;&#x4F30;&#x4E86;&#x5B83;&#x4EEC;&#x7684;&#x6709;&#x6548;&#x6027;&#x3002;&#x7B2C;&#x4E8C;&#xFF0C;&#x6211;&#x4EEC;&#x679A;&#x4E3E;&#x4E86;&#x4E00;&#x4E9B;&#x673A;&#x5236;&#xFF0C;&#x5B83;&#x4EEC;&#x53EF;&#x4EE5;&#x88AB;&#x5F00;&#x53D1;&#x8005;&#x7528;&#x4E8E;&#x624B;&#x52A8;&#x5730;&#x9884;&#x9632;&#x6216;&#x4FEE;&#x590D;&#x6E90;&#x7801;&#x4ED3;&#x5E93;&#x4E2D;API keys&#x7684;&#x6CC4;&#x9732;&#x3002;<br>&#x6700;&#x540E;&#xFF0C;&#x6211;&#x4EEC;&#x6982;&#x8FF0;&#x4E86;&#x4E00;&#x4E2A;&#x53EF;&#x80FD;&#x7684;&#x89E3;&#x51B3;&#x65B9;&#x6848;&#xFF0C;&#x7ED3;&#x5408;&#x8FD9;&#x4E9B;&#x6280;&#x672F;&#x6765;&#x4E3A;&#x7248;&#x672C;&#x63A7;&#x5236;&#x7CFB;&#x7EDF;&#x4E2D;&#x7684;&#x5BC6;&#x94A5;&#x6CC4;&#x9732;&#x63D0;&#x4F9B;&#x5DE5;&#x5177;&#x652F;&#x6301;&#x3002;</p>
+<h2 id="0x01-&#x4ECB;&#x7ECD;"><a href="#0x01-&#x4ECB;&#x7ECD;" class="headerlink" title="0x01 &#x4ECB;&#x7ECD;"></a>0x01 &#x4ECB;&#x7ECD;</h2><p>&#x8BB8;&#x591A;&#x57FA;&#x4E8E;web&#x548C;&#x79FB;&#x52A8;&#x7AEF;&#x7684;&#x5E94;&#x7528;&#x90FD;&#x662F;&#x901A;&#x8FC7;Web API&#x6765;&#x548C;&#x5916;&#x90E8;&#x670D;&#x52A1;&#x76F8;&#x4E92;&#x4F5C;&#x7528;&#x7684;&#x3002;&#x800C;&#x5E94;&#x7528;&#x4E0E;&#x670D;&#x52A1;&#x4E4B;&#x95F4;&#x7684;&#x8BA4;&#x8BC1;&#x673A;&#x5236;&#x662F;&#x901A;&#x8FC7;&#x4E00;&#x4E2A;API key&#x6216;&#x8005;&#x4E00;&#x5BF9;API&#x5BA2;&#x6237;&#x7AEF;&#x6807;&#x8BC6;&#x7B26;&#x548C;&#x4E00;&#x4E2A;&#x5BC6;&#x94A5;&#x6765;&#x5B9E;&#x73B0;&#x8BA4;&#x8BC1;&#x3002;<br>&#x56E0;&#x4E3A;&#x8FD9;&#x4E9B;&#x670D;&#x52A1;&#x662F;&#x6253;&#x7B97;&#x88AB;&#x670D;&#x52A1;&#x7AEF;&#x5E94;&#x7528;&#x7EC4;&#x4EF6;&#x8C03;&#x7528;&#x7684;&#xFF0C;&#x5BC6;&#x94A5;&#x672C;&#x8EAB;&#x5E94;&#x8BE5;&#x7406;&#x60F3;&#x5730;&#x5F85;&#x5728;&#x670D;&#x52A1;&#x7AEF;&#x7684;&#x7A0B;&#x5E8F;&#x5185;&#x5B58;&#x4E2D;&#xFF0C;&#x6240;&#x4EE5;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x7684;&#x7528;&#x6237;&#x662F;&#x65E0;&#x6CD5;&#x8BBF;&#x95EE;&#x7684;&#x3002;&#x4F46;&#x662F;&#xFF0C;&#x5927;&#x91CF;&#x5E94;&#x7528;&#x5F00;&#x53D1;&#x8005;&#x9009;&#x62E9;&#x5C06;&#x4ED6;&#x4EEC;&#x7684;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x6E90;&#x7801;&#x6258;&#x7BA1;&#x4E8E;&#x4ED3;&#x5E93;&#xFF0C;&#x6BD4;&#x5982;GitHub&#x548C;BitBucket&#x3002;<br>&#x6587;&#x7AE0;&#x7ED3;&#x6784;&#xFF1A;<br>Section II&#xFF1A;&#x6982;&#x8FF0;&#x5BC6;&#x94A5;&#x6CC4;&#x9732;&#x68C0;&#x6D4B;&#x6280;&#x672F;<br>Section III: &#x6982;&#x8FF0;&#x6291;&#x5236;&#x6280;&#x672F;<br>Section IV&#xFF1A;&#x76F8;&#x5173;&#x5DE5;&#x4F5C;<br>Section V&#xFF1A;&#x7ED3;&#x8BBA;</p>
+<h2 id="0x02-&#x5BC6;&#x94A5;&#x6CC4;&#x9732;&#x68C0;&#x6D4B;&#x6280;&#x672F;"><a href="#0x02-&#x5BC6;&#x94A5;&#x6CC4;&#x9732;&#x68C0;&#x6D4B;&#x6280;&#x672F;" class="headerlink" title="0x02 &#x5BC6;&#x94A5;&#x6CC4;&#x9732;&#x68C0;&#x6D4B;&#x6280;&#x672F;"></a>0x02 &#x5BC6;&#x94A5;&#x6CC4;&#x9732;&#x68C0;&#x6D4B;&#x6280;&#x672F;</h2><p><strong>A. Sample Selection using Keyword Search&#xFF08;&#x7528;&#x5173;&#x952E;&#x5B57;&#x641C;&#x7D22;&#x8FDB;&#x884C;&#x6837;&#x672C;&#x6311;&#x9009;&#xFF09;</strong></p>
+<p>1) &#x5BF9;&#x4E8E;&#x7A83;&#x53D6;&#x6CC4;&#x6F0F;&#x5728;GitHub&#x4E0A;&#x7684;&#x5BC6;&#x94A5;&#x7684;&#x653B;&#x51FB;&#x8005;&#x6765;&#x8BF4;&#xFF0C;&#x7B2C;&#x4E00;&#x4E2A;&#x65B9;&#x6CD5;&#xFF0C;&#x4E5F;&#x662F;&#x6700;&#x7B80;&#x5355;&#x7684;&#x65B9;&#x6CD5;&#x5C31;&#x662F;&#x5229;&#x7528;GitHub&#x5185;&#x7F6E;&#x7684;&#x641C;&#x7D22;&#x65B9;&#x6CD5;&#x53BB;&#x5BFB;&#x627E;&#x53EF;&#x80FD;&#x8868;&#x660E;&#x5BC6;&#x94A5;&#x5B58;&#x5728;&#x7684;&#x5173;&#x952E;&#x5B57;&#x6216;&#x8005;&#x6587;&#x4EF6;&#x540D;&#x3002;<br>&#x4E8B;&#x5B9E;&#x4E0A;&#xFF0C;&#x636E;&#x8BF4;&#x5728;&#x7ECF;&#x8FC7;&#x641C;&#x7D22;&#x6587;&#x4EF6;&#x540D;id_rsa&#x6216;&#x641C;&#x7D22;&#x5B57;&#x7B26;&#x4E32;<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">---BEGIN RSA PRIVATE LEY---</div></pre></td></tr></table></figure></p>
+<p>&#x800C;&#x6CC4;&#x9732;&#x4E00;&#x4E9B;SSH&#x503C;&#x4E4B;&#x540E;&#xFF0C;GitHub&#x5728;2013&#x5E74;&#x6682;&#x505C;&#x4E86;&#x5B83;&#x7684;&#x641C;&#x7D22;&#x65B9;&#x6CD5;&#x3002;</p>
+<p>2) &#x5BF9;&#x4E8E;&#x5176;&#x4ED6;&#x7C7B;&#x578B;&#x7684;&#x5BC6;&#x94A5;&#xFF0C;&#x6CA1;&#x6709;&#x5FC5;&#x9700;&#x7684;&#x6587;&#x4EF6;&#x683C;&#x5F0F;&#xFF0C;&#x4F46;&#x662F;&#x6709;&#x7B80;&#x5355;&#x7684;&#x7279;&#x5F81;&#x6A21;&#x5F0F;&#x3002;&#x4E0B;&#x56FE;&#x662F;&#x4E00;&#x4E9B;&#x670D;&#x52A1;&#x63D0;&#x4F9B;&#x5546;&#x7684;API keys&#x3002;</p>
+<p>&#x4F46;&#x662F;&#xFF0C;GitHub&#x4E0D;&#x5141;&#x8BB8;&#x5BF9;&#x4EE3;&#x7801;&#x8FDB;&#x884C;&#x6B63;&#x5219;&#x5339;&#x914D;&#x3002;&#x6240;&#x4EE5;&#x6700;&#x7B80;&#x5355;&#x7684;&#x65B9;&#x5F0F;&#x5C31;&#x662F;&#x5BF9;GitHub&#x7684;&#x6BCF;&#x4E2A;&#x4ED3;&#x5E93;&#x8FDB;&#x884C;&#x514B;&#x9686;&#xFF0C;&#x7136;&#x540E;&#x518D;&#x7528;&#x6B63;&#x5219;&#x641C;&#x7D22;&#x3002;&#x4F46;&#x662F;GitHub&#x4E0A;&#x6709;&#x767E;&#x4E07;&#x7EA7;&#x7684;&#x4ED3;&#x5E93;&#xFF0C;&#x8FD9;&#x7EDD;&#x4E0D;&#x662F;&#x4E00;&#x4E2A;&#x5C0F;&#x4E8B;&#x3002;<br>&#x4F46;&#x662F;GHTorrent&#x5DF2;&#x7ECF;&#x8BD5;&#x56FE;&#x63D0;&#x4F9B;&#x4E00;&#x4E2A;GitHub&#x767E;&#x4E07;&#x4ED3;&#x5E93;&#x7684;&#x53EF;&#x67E5;&#x8BE2;&#x7684;&#x955C;&#x50CF;&#xFF0C;&#x8FD9;&#x5C06;&#x4F7F;&#x5F97;&#x653B;&#x51FB;&#x8005;&#x66F4;&#x6709;&#x6548;&#x5730;&#x51CF;&#x5C11;&#x53EF;&#x80FD;&#x5305;&#x542B;API Keys&#x7684;&#x6837;&#x672C;&#x96C6;&#x3002;</p>
+<p><strong>B. Pattern-based Search&#xFF08;&#x57FA;&#x4E8E;&#x89C4;&#x5219;&#x7684;&#x641C;&#x7D22;&#xFF09;</strong></p>
+<p>1) &#x7531;&#x4E8E;&#x6211;&#x4EEC;&#x7684;&#x6570;&#x636E;&#x96C6;&#x5305;&#x542B;&#x53EF;&#x80FD;&#x6CC4;&#x9732;&#x4E9A;&#x9A6C;&#x900A; AWS &#x8BC1;&#x4E66;&#x7684;&#x9879;&#x76EE;&#xFF0C;&#x6211;&#x4EEC;&#x9996;&#x5148;&#x6267;&#x884C;&#x4E00;&#x4E2A;&#x5339;&#x914D;&#x4E9A;&#x9A6C;&#x900A;&#x8BC1;&#x4E66;&#x89C4;&#x5219;&#x7684;&#x5168;&#x6587;&#x672C;&#x641C;&#x7D22;&#x3002;&#x4F46;&#x662F;&#x4E00;&#x4E2A;&#x7B80;&#x5355;&#x7684;&#x89C4;&#x5219;&#x641C;&#x7D22;&#x5BFC;&#x81F4;&#x4E86;&#x5927;&#x91CF;&#x7684;&#x8BEF;&#x5DEE;&#x3002;<br>&#x6211;&#x4EEC;&#x7684;&#x6570;&#x636E;&#x96C6;&#x7531;&#x5229;&#x7528;&#x4E9A;&#x9A6C;&#x900A;&#x57FA;&#x4E8E;Java&#x7684;Client API&#x7EC4;&#x6210;&#xFF0C;&#x6211;&#x4EEC;&#x63A5;&#x4E0B;&#x6765;&#x8BA9;&#x6211;&#x4EEC;&#x7684;&#x641C;&#x7D22;&#x4EC5;&#x9650;&#x4E8E;Java&#x6E90;&#x7801;&#x6587;&#x4EF6;&#x4E2D;&#x5B57;&#x7B26;&#x4E32;&#x7684;&#x5B57;&#x9762;&#x610F;&#x601D;&#x3002;</p>
+<p>2) &#x6211;&#x4EEC;&#x5229;&#x7528;Eclipse JDT&#x7684;&#x8BED;&#x6CD5;&#x5206;&#x6790;&#x5668;&#x4ECE;Java&#x6E90;&#x7801;&#x6587;&#x4EF6;&#x4E2D;&#x751F;&#x6210;&#x6458;&#x8981;&#x8BED;&#x6CD5;&#x6811;&#xFF08;ASTs,Abstract syntax trees&#xFF09;&#xFF0C;&#x5E76;&#x4E14;&#x57FA;&#x4E8E;&#x5B57;&#x7B26;&#x4E32;&#x5B57;&#x9762;&#x503C;&#x8282;&#x70B9;&#x6267;&#x884C;&#x4E00;&#x4E2A;&#x89C4;&#x5219;&#x641C;&#x7D22;&#x3002;&#x8FD9;&#x79CD;&#x6280;&#x672F;&#x867D;&#x7136;&#x4F7F;&#x5F97;&#x8BEF;&#x5DEE;&#x7387;&#x6709;&#x6240;&#x964D;&#x4F4E;&#xFF0C;&#x4F46;&#x4ECD;&#x7136;&#x6709;&#x9650;&#x3002;</p>
+<p><strong>C. Heuristics-driven Filtering&#xFF08;&#x63A2;&#x7D22;&#x5F0F;&#x8FC7;&#x6EE4;&#xFF09;</strong></p>
+<p>1) &#x6709;&#x4EBA;&#x4F7F;&#x7528;&#x9644;&#x52A0;&#x7684;&#x6807;&#x51C6;&#x53BB;&#x8FC7;&#x6EE4;&#x8BEF;&#x5DEE;&#x9879;&#xFF0C;&#x6BD4;&#x5982;&#x67E5;&#x770B;&#x5728;5&#x884C;&#x5185;&#x65E2;&#x5339;&#x914D;&#x5230;Client ID&#x53C8;&#x5339;&#x914D;&#x5230;Secret Key&#x7684;&#x5B9E;&#x4F8B;&#x3002;&#x53EF;&#x80FD;&#x56E0;&#x4E3A;&#x5728;&#x5BA2;&#x6237;&#x7AEF;API&#x58F0;&#x660E;&#x4E2D;&#x6216;&#x5E38;&#x91CF;&#x6587;&#x4EF6;&#x4E2D;&#x5B83;&#x4EEC;&#x662F;&#x786C;&#x7F16;&#x7801;&#x3002;&#x5B9E;&#x9A8C;&#x8BC1;&#x660E;&#xFF0C;&#x8FD9;&#x662F;&#x4E00;&#x9879;&#x6709;&#x6548;&#x7684;&#x63A2;&#x7D22;&#x3002;&#x5F53;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x4E00;&#x822C;&#x7CBE;&#x786E;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x5B83;&#x5BB9;&#x6613;&#x9519;&#x8FC7;&#x5728;&#x8BC1;&#x4E66;&#x6CA1;&#x6709;&#x4E00;&#x8D77;&#x95ED;&#x5408;&#x65F6;&#x6CC4;&#x9732;&#x5BC6;&#x94A5;&#x7684;&#x5B9E;&#x4F8B;&#x3002;</p>
+<p>2) &#x53E6;&#x4E00;&#x4E2A;&#x65B9;&#x6CD5;&#x662F;&#x53BB;&#x731C;&#x6D4B;&#x5339;&#x914D;&#x5230;&#x7684;API keys&#x662F;&#x81EA;&#x52A8;&#x751F;&#x6210;&#x7684;&#x8FD8;&#x662F;&#x624B;&#x5199;&#x7684;&#x3002;&#x6211;&#x4EEC;&#x6CE8;&#x610F;&#x5230;&#x5F88;&#x591A;&#x8BEF;&#x5DEE;&#x9879;&#x662F;&#x6709;&#x624B;&#x5199;&#x5B57;&#x7B26;&#x4E32;&#x6216;&#x8005;&#x5360;&#x4F4D;&#x7B26;&#x5F15;&#x8D77;&#x7684;&#x3002;&#x4E3A;&#x4E86;&#x53BB;&#x6389;&#x8FD9;&#x4E9B;&#x60F3;&#xFF0C;&#x6211;&#x4EEC;&#x91C7;&#x7528;&#x4E00;&#x4E2A;&#x6807;&#x51C6;&#x7684;&#x5BC6;&#x7801;&#x5F3A;&#x5EA6;&#x4F30;&#x8BA1;&#x3002;<br>&#x5B83;&#x6452;&#x5F03;&#x90A3;&#x4E9B;&#x5305;&#x542B;&#x91CD;&#x590D;&#x5B57;&#x7B26;&#x6216;&#x5B57;&#x5178;&#x5B57;&#x8BCD;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#xFF0C;&#x63A5;&#x6536;&#x90A3;&#x4E9B;&#x6709;&#x5F88;&#x9AD8;&#x968F;&#x673A;&#x6027;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#xFF08;&#x71B5;&#xFF09;&#x3002;&#x8FD9;&#x4E2A;&#x6280;&#x672F;&#x5C06;&#x68C0;&#x6D4B;&#x7387;&#x63D0;&#x9AD8;&#x5230;91%&#xFF0C;&#x4F59;&#x4E0B;&#x7684;&#x8BEF;&#x5DEE;&#x9879;&#x662F;&#x7531;&#x81EA;&#x52A8;&#x751F;&#x6210;&#x7684;&#x7C7B;Key &#x5B57;&#x7B26;&#x4E32;&#x5F15;&#x8D77;&#x7684;&#xFF0C;&#x5B83;&#x4EEC;&#x6709;&#x4E0D;&#x540C;&#x7684;&#x7528;&#x5904;&#xFF0C;&#x6BD4;&#x5982;&#x5E8F;&#x5217;&#x5316;&#x5BF9;&#x8C61;&#x7684;&#x6807;&#x8BC6;&#x7B26;&#x3002;</p>
+<p><strong>D. Source-based Program Slicing&#xFF08;&#x57FA;&#x4E8E;&#x6E90;&#x7801;&#x7684;&#x7A0B;&#x5E8F;&#x5207;&#x7247;&#xFF09;</strong></p>
+<p>1) &#x4E00;&#x4E2A;&#x91CD;&#x91CF;&#x7EA7;&#x7684;&#x7CBE;&#x786E;&#x67E5;&#x627E;&#x8FD9;&#x4E9B;&#x5B57;&#x7B26;&#x4E32;&#x6D41;&#x5411;&#x5BA2;&#x6237;&#x7AEF;API&#x58F0;&#x660E;&#x7684;&#x65B9;&#x6CD5;&#x662F;&#x5229;&#x7528;&#x7A0B;&#x5E8F;&#x5207;&#x7247;&#x3002;&#x8FD9;&#x91CC;&#x6709;&#x51E0;&#x4E2A;&#x73B0;&#x6709;&#x6280;&#x672F;&#x53BB;&#x7CBE;&#x786E;&#x5730;&#x8DDF;&#x8E2A;&#x5B57;&#x7B26;&#x4E32;&#x7684;&#x503C;&#xFF0C;&#x5373;&#x4F7F;&#x5B83;&#x4ECE;&#x5C5E;&#x4E8E;&#x8FD0;&#x7B97;&#xFF0C;&#x6BD4;&#x5982;&#x7EA7;&#x8054;&#x548C;&#x5B57;&#x4E32;&#x63D0;&#x53D6;&#x3002;<br>&#x7136;&#x800C;&#xFF0C;&#x8FD9;&#x4E9B;&#x65B9;&#x6CD5;&#x5BF9;&#x4E8E;&#x6211;&#x4EEC;&#x7684;&#x76EE;&#x7684;&#x6765;&#x8BF4;&#x6709;&#x4E9B;&#x8FC7;&#x5EA6;&#x4E86;&#xFF0C;&#x56E0;&#x4E3A;&#x6211;&#x4EEC;&#x4E0D;&#x5E0C;&#x671B;&#x786C;&#x7F16;&#x7801;&#x5BC6;&#x7801;&#x53BB;&#x7ECF;&#x5386;&#x8FD9;&#x4E9B;&#x8F6C;&#x6362;&#x3002;</p>
+<p>2) &#x6211;&#x4EEC;&#x4F7F;&#x7528;&#x4E86;&#x5185;&#x90E8;&#x5F00;&#x53D1;&#x7684;&#x4E00;&#x4E2A;&#x8F7B;&#x91CF;&#x7EA7;&#x7684;&#x57FA;&#x4E8E;&#x6E90;&#x7801;&#x7684;&#x6D41;&#x654F;&#x611F;&#x7684;&#x7A0B;&#x5E8F;&#x5207;&#x7247;&#x7B97;&#x6CD5;&#xFF0C;&#x8FD9;&#x4E2A;&#x7B97;&#x6CD5;&#x5EFA;&#x7ACB;&#x4E86;&#x4E00;&#x4E2A;&#x7CFB;&#x7EDF;&#x4F9D;&#x8D56;&#x56FE;&#xFF0C;&#x7C7B;&#x4F3C;&#x4E8E;&#x7ECF;&#x5178;&#x7684;HRB&#x5207;&#x7247;&#x3002;&#x4F46;&#x662F;&#x5B83;&#x662F;&#x4E0A;&#x4E0B;&#x6587;&#x4E0D;&#x654F;&#x611F;&#x7684;&#xFF0C;&#x56E0;&#x4E3A;&#x6211;&#x4EEC;&#x4E0D;&#x7CBE;&#x786E;&#x5339;&#x914D;&#x8C03;&#x7528;&#x8FD4;&#x56DE;&#x70B9;&#x3002;</p>
+<h2 id="0x03-&#x5BC6;&#x94A5;&#x6CC4;&#x9732;&#x6291;&#x5236;&#x6280;&#x672F;"><a href="#0x03-&#x5BC6;&#x94A5;&#x6CC4;&#x9732;&#x6291;&#x5236;&#x6280;&#x672F;" class="headerlink" title="0x03 &#x5BC6;&#x94A5;&#x6CC4;&#x9732;&#x6291;&#x5236;&#x6280;&#x672F;"></a>0x03 &#x5BC6;&#x94A5;&#x6CC4;&#x9732;&#x6291;&#x5236;&#x6280;&#x672F;</h2><p><strong>A. Preventing Leaks Explicitly&#xFF08;&#x660E;&#x786E;&#x9632;&#x6B62;&#x6CC4;&#x9732;&#xFF09;</strong></p>
+<p>1) &#x4E0D;&#x5728;&#x6E90;&#x7801;&#x4E2D;&#x5D4C;&#x5165;&#x5BC6;&#x94A5;&#xFF0C;&#x800C;&#x662F;&#x653E;&#x5728;&#x4E0D;&#x88AB;&#x7248;&#x672C;&#x63A7;&#x5236;&#x7CFB;&#x7EDF;&#x8FFD;&#x8E2A;&#x7684;&#x6587;&#x4EF6;&#x4E2D;&#x3002;</p>
+<p>2) &#x5728;Git&#x4E2D;&#xFF0C;&#x4F7F;&#x7528;.gitignore&#x6587;&#x4EF6;&#x6765;&#x5FFD;&#x7565;&#x3002;</p>
+<p>3) &#x5305;&#x542B;API keys&#x7684;&#x6587;&#x4EF6;&#x9700;&#x8981;&#x8BA4;&#x8BC1;&#x5171;&#x4EAB;&#x4ED3;&#x5E93;&#x624D;&#x80FD;&#x8BBF;&#x95EE;&#x3002;&#x4F8B;&#x5982;&#x5DE5;&#x5177;git-crypt</p>
+<p><strong>B. Remedying Leaks Keys&#xFF08;&#x4FEE;&#x590D;&#x6CC4;&#x9732;&#x5BC6;&#x94A5;&#xFF09;</strong></p>
+<p><strong>C. Preventing Leaks Automatically&#xFF08;&#x81EA;&#x52A8;&#x9632;&#x6B62;&#x6CC4;&#x9732;&#xFF09;</strong></p>
+<h2 id="0x04-&#x76F8;&#x5173;&#x5DE5;&#x4F5C;"><a href="#0x04-&#x76F8;&#x5173;&#x5DE5;&#x4F5C;" class="headerlink" title="0x04 &#x76F8;&#x5173;&#x5DE5;&#x4F5C;"></a>0x04 &#x76F8;&#x5173;&#x5DE5;&#x4F5C;</h2><h2 id="0x05-&#x7ED3;&#x8BBA;"><a href="#0x05-&#x7ED3;&#x8BBA;" class="headerlink" title="0x05 &#x7ED3;&#x8BBA;"></a>0x05 &#x7ED3;&#x8BBA;</h2>
+                <hr>
+                
+                <!-- 多说 Share start -->
+                <div class="ds-share"
+                     style="text-align: right"
+                     data-thread-key="2017/02/20/detecting secret-key leaks/"
+                     data-title="【文献阅读】Detecting and Mitigating Secret-Key Leaks in Source Code Repositories"
+                     data-url="http://simmin.github.io/2017/02/20/detecting secret-key leaks/"
+                     data-images=""
+                     data-content="
+
+0x00 &#x6458;&#x8981;&#x3010;&#x6574;&#x6BB5;... | Simmin&#39;s blog ">
+                    <div class="ds-share-inline">
+                        <ul class="ds-share-icons-16">
+                            <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
+                            <li><a class="ds-wechat flat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+                            <li><a class="ds-weibo flat" href="javascript:void(0);" data-service="weibo">微博</a></li>
+                            <li><a class="ds-douban flat" href="javascript:void(0);" data-service="douban">豆瓣</a></li>
+                        </ul>
+                        <div class="ds-share-icons-more">
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <!-- 多说 Share end-->
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2017/02/25/github-accout-config/" data-toggle="tooltip" data-placement="top"
+                           title="GitHub 多账户配置">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2017/02/17/初学浏览器缓存机制/" data-toggle="tooltip" data-placement="top"
+                           title="初学浏览器缓存机制">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+                <!-- 多说评论框 start -->
+                <div class="comment">
+                    <div class="ds-thread"
+                         data-thread-key="2017/02/20/detecting secret-key leaks/"
+                         data-title="【文献阅读】Detecting and Mitigating Secret-Key Leaks in Source Code Repositories"
+                         data-url="http://simmin.github.io/2017/02/20/detecting secret-key leaks/">
+                    </div>
+                </div>
+                <!-- 多说评论框 end -->
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x00-摘要"><span class="toc-text">0x00 摘要</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-介绍"><span class="toc-text">0x01 介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-密钥泄露检测技术"><span class="toc-text">0x02 密钥泄露检测技术</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x03-密钥泄露抑制技术"><span class="toc-text">0x03 密钥泄露抑制技术</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x04-相关工作"><span class="toc-text">0x04 相关工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x05-结论"><span class="toc-text">0x05 结论</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#Secret-Key Leaks"
+                           title="Secret-Key Leaks">Secret-Key Leaks</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <div style="margin-top: 20px;">
+                    <h5 class="text-center">FRIENDS</h5>
+                    <ul class="list-inline text-center">
+                        
+                        <li><a href="http://das.scusec.org/">小黑屋</a></li>
+                        
+                        <li><a href="http://wsyks.github.io/">我是_一棵树_</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    // dynamic User by Hux
+    var _user = 'simmin';
+
+    // duoshuo comment query.
+    var duoshuoQuery = {short_name: _user};
+    (function () {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';
+        ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/simmin">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Simmin 2017
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://simmin.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','null','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="http://ohsqunbzi.bkt.clouddn.com/simmin/bg-img/blog-head-img.png">
+</body>
+
+</html>
