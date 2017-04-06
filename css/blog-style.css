@@ -70,8 +70,11 @@ body {
 
 p {
     margin:0 0 20px;
+    line-height: 2;
 }
-
+b,strong{
+    letter-spacing: 0.5px;
+}
 h1,
 h2,
 h3,
@@ -79,6 +82,7 @@ h4,
 h5,
 h6{
     font-weight: 400;
+    margin-bottom: 20px;
 }
 h2{font-size: 22px}
 h3{font-size: 20px}
@@ -86,7 +90,7 @@ h4{font-size: 18px}
 h5{font-size: 16px}
 h6{font-size: 15px}
 article .post-container h2{
-    font-weight: 600;
+    font-weight: 400;
 }
 a {
     color: #404040;
@@ -104,10 +108,12 @@ a img:focus {
 
 
 blockquote {
-    color: #808080;
+    // color: #808080;
+    color: #333;
     font-size: 0.95em;
     margin: 20px 0 20px;
     border-color: #ff7e79;
+    background-color: #f5f5f5;
 }
 
 blockquote p {
@@ -160,6 +166,7 @@ pre code {
     width: auto;
     white-space: pre;
     word-wrap: normal;
+    font-family: "微软雅黑";
 }
 
 .post-container a {
@@ -176,20 +183,20 @@ article .post-container h6 {
     // margin-top:-90px;
     // padding: 100px 0 0;
 }
-article .post-container h4{
-    padding-left: 15px;
-}
-article .post-container h4:before{
-    content: "";
-    width: 0;
-    height: 0;
-    line-height: 0;
-    font-size: 0;
-    border: 9px solid transparent;
-    border-left-color: #FC7097;
-    position: absolute;
-    left: 15px;
-}
+// article .post-container h4{
+//     padding-left: 15px;
+// }
+// article .post-container h4:before{
+//     content: "";
+//     width: 0;
+//     height: 0;
+//     line-height: 0;
+//     font-size: 0;
+//     border: 9px solid transparent;
+//     border-left-color: #FC7097;
+//     position: absolute;
+//     left: 15px;
+// }
 article blockquote footer{
     padding: 5px 20px 0;
 }
@@ -206,7 +213,10 @@ article blockquote footer{
 .post-container ol {
     margin-bottom: 20px;
 }
-
+.post-container ul li,
+.post-container ol li{
+    margin: 10px 0;
+}
 @media screen and (max-width: 768px) {
     .post-container ul,
     .post-container ol {
