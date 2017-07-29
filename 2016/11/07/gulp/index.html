@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Simmin的个人博客">
+    <meta name="keyword" content="null">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="http://ohsqunbzi.bkt.clouddn.com/simmin/bg-img/favicon.png">
+    <link rel="alternate" type="application/atom+xml" title="Simmin" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        Gulp初识及使用小例子｜Simmin&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://simmin.github.io/2016/11/07/gulp/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('http://ohsqunbzi.bkt.clouddn.com/blog-bg-black-run.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    Simmin
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="blog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">首页</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/Tags/">标签</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="http://ohsqunbzi.bkt.clouddn.com/simmin/bg-img/banner-bg.png">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('http://ohsqunbzi.bkt.clouddn.com/simmin/bg-img/banner-bg.png')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>Gulp初识及使用小例子</h1>
+                    
+                    <span class="meta">
+                         作者 Simmin
+                        <span>
+                          日期 2016-11-07
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#前端自动化"
+                           title="前端自动化">前端自动化</a>
+                        
+                        <a class="tag" href="/tags/#gulp"
+                           title="gulp">gulp</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            Gulp初识及使用小例子
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p><img src="http://dassec.b0.upaiyun.com/frontEnd/gulp/gulp.png" alt="gulp.png"></p>
+<h2 id="&#x6240;&#x8C13;Gulp"><a href="#&#x6240;&#x8C13;Gulp" class="headerlink" title="&#x6240;&#x8C13;Gulp"></a>&#x6240;&#x8C13;Gulp</h2><blockquote>
+<p>&#x5B98;&#x65B9;&#x5B9A;&#x4E49;&#xFF1A;&#x57FA;&#x4E8E;&#x6587;&#x4EF6;&#x6D41;&#x7684;&#x6784;&#x5EFA;&#x7CFB;&#x7EDF;</p>
+</blockquote>
+<p><strong>&#x7279;&#x70B9;</strong></p>
+<ol>
+<li>&#x5B83;&#x662F;&#x57FA;&#x4E8E;Nodejs&#x7684;&#x81EA;&#x52A8;&#x4EFB;&#x52A1;&#x8FD0;&#x884C;&#x5668;&#xFF0C;&#x80FD;&#x81EA;&#x52A8;&#x5316;&#x5B8C;&#x6210;javascript/coffee/sass/less/html/image/css &#x7B49;&#x6587;&#x4EF6;&#x7684;&#x7684;&#x6D4B;&#x8BD5;&#x3001;&#x68C0;&#x67E5;&#x3001;&#x5408;&#x5E76;&#x3001;&#x538B;&#x7F29;&#x3001;&#x683C;&#x5F0F;&#x5316;&#x3001;&#x6D4F;&#x89C8;&#x5668;&#x81EA;&#x52A8;&#x5237;&#x65B0;&#x3001;&#x90E8;&#x7F72;&#x6587;&#x4EF6;&#x751F;&#x6210;&#xFF0C;&#x5E76;&#x76D1;&#x542C;&#x6587;&#x4EF6;&#x5728;&#x6539;&#x52A8;&#x540E;&#x91CD;&#x590D;&#x6307;&#x5B9A;&#x7684;&#x8FD9;&#x4E9B;&#x6B65;&#x9AA4;&#x3002;</li>
+<li>&#x5728;&#x5B9E;&#x73B0;&#x4E0A;&#xFF0C;&#x501F;&#x9274;Unix&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x7684;&#x7BA1;&#x9053;&#xFF08;pipe&#xFF09;&#x601D;&#x60F3;&#xFF0C;&#x524D;&#x4E00;&#x7EA7;&#x7684;&#x8F93;&#x51FA;&#xFF0C;&#x76F4;&#x63A5;&#x53D8;&#x6210;&#x540E;&#x4E00;&#x7EA7;&#x7684;&#x8F93;&#x5165;&#xFF0C;&#x4F7F;&#x5F97;&#x5728;&#x64CD;&#x4F5C;&#x4E0A;&#x975E;&#x5E38;&#x7B80;&#x5355;&#x3002;</li>
+</ol>
+<h2 id="Gulp&#x7684;&#x5B89;&#x88C5;"><a href="#Gulp&#x7684;&#x5B89;&#x88C5;" class="headerlink" title="Gulp&#x7684;&#x5B89;&#x88C5;"></a>Gulp&#x7684;&#x5B89;&#x88C5;</h2><h3 id="1-&#x5B89;&#x88C5;Node"><a href="#1-&#x5B89;&#x88C5;Node" class="headerlink" title="1. &#x5B89;&#x88C5;Node"></a>1. &#x5B89;&#x88C5;Node</h3><p>&#x5B98;&#x65B9;Node&#xFF1A;<a href="https://nodejs.org&#xFF0C;npm&#xFF08;&#x57FA;&#x4E8E;&#x547D;&#x4EE4;&#x884C;&#x7684;node&#x5305;&#x7BA1;&#x7406;&#x5DE5;&#x5177;&#xFF09;&#x4F1A;&#x4E00;&#x8D77;&#x88AB;&#x5B89;&#x88C5;&#x3002;" target="_blank" rel="external">https://nodejs.org&#xFF0C;npm&#xFF08;&#x57FA;&#x4E8E;&#x547D;&#x4EE4;&#x884C;&#x7684;node&#x5305;&#x7BA1;&#x7406;&#x5DE5;&#x5177;&#xFF09;&#x4F1A;&#x4E00;&#x8D77;&#x88AB;&#x5B89;&#x88C5;&#x3002;</a></p>
+<p>&#x5B89;&#x88C5;&#x5B8C;&#x6210;&#x540E;&#x4F7F;&#x7528;&#x76F8;&#x5E94;&#x547D;&#x4EE4;&#x53EF;&#x4EE5;&#x67E5;&#x770B;&#x7248;&#x672C;&#x53F7;&#x4EE5;&#x786E;&#x5B9A;&#x662F;&#x5426;&#x6210;&#x529F;&#x5B89;&#x88C5;</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">node -v </div><div class="line">//v4.4.5</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">npm -v </div><div class="line">//3.10.9</div></pre></td></tr></table></figure>
+<h3 id="2-&#x5B89;&#x88C5;Gulp"><a href="#2-&#x5B89;&#x88C5;Gulp" class="headerlink" title="2. &#x5B89;&#x88C5;Gulp"></a>2. &#x5B89;&#x88C5;Gulp</h3><p><strong>a. &#x5148;&#x5168;&#x5C40;&#x5B89;&#x88C5; gulp</strong><br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ npm install --global gulp</div></pre></td></tr></table></figure></p>
+<p><strong>b. &#x9879;&#x76EE;&#x6839;&#x76EE;&#x5F55;&#x4E0B;&#x521B;&#x5EFA;package.json&#x6587;&#x4EF6;</strong></p>
+<p>&#x4F18;&#x5148;&#x4F7F;&#x7528;&#x547D;&#x4EE4;&#x884C;<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ npm init</div></pre></td></tr></table></figure></p>
+<p>&#x4E5F;&#x53EF;&#x4EE5;&#x624B;&#x52A8;&#x6DFB;&#x52A0;</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">{</div><div class="line">  &quot;name&quot;: &quot;gulp&quot;, //&#x9879;&#x76EE;&#x540D;&#x79F0;</div><div class="line">  &quot;version&quot;: &quot;1.0.0&quot;, //&#x9879;&#x76EE;&#x7248;&#x672C;</div><div class="line">  &quot;description&quot;: &quot;this is a test for gulp&quot;,  //&#x9879;&#x76EE;&#x63CF;&#x8FF0;</div><div class="line">  &quot;main&quot;: &quot;index.js&quot;, //&#x9879;&#x76EE;&#x5165;&#x53E3;&#x6587;&#x4EF6;</div><div class="line">  &quot;dependencies&quot;: {  //&#x9879;&#x76EE;&#x4F9D;&#x8D56;&#x7684;&#x63D2;&#x4EF6;</div><div class="line">    &quot;gulp&quot;: &quot;^3.9.1&quot;</div><div class="line">  },</div><div class="line">  &quot;devDependencies&quot;: {},</div><div class="line">  &quot;scripts&quot;: {</div><div class="line">    &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;</div><div class="line">  },</div><div class="line">  &quot;keywords&quot;: [</div><div class="line">    &quot;gulp&quot;</div><div class="line">  ],</div><div class="line">  &quot;author&quot;: &quot;simmin&quot;, //&#x9879;&#x76EE;&#x4F5C;&#x8005;&#x4FE1;&#x606F;</div><div class="line">  &quot;license&quot;: &quot;ISC&quot; //&#x9879;&#x76EE;&#x8BB8;&#x53EF;&#x534F;&#x8BAE;</div><div class="line">}</div></pre></td></tr></table></figure>
+<p><strong>b. &#x518D;&#x4F5C;&#x4E3A;&#x9879;&#x76EE;&#x7684;&#x5F00;&#x53D1;&#x4F9D;&#x8D56;&#xFF08;devDependencies&#xFF09;&#x5B89;&#x88C5;</strong></p>
+<p>&#x9879;&#x76EE;&#x76EE;&#x5F55;&#x4E0B;&#xFF1A;<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ npm install --save-dev gulp</div></pre></td></tr></table></figure></p>
+<p><strong>d. &#x5728;&#x9879;&#x76EE;&#x6839;&#x76EE;&#x5F55;&#x4E0B;&#x521B;&#x5EFA;gulpfile.js&#x6587;&#x4EF6;</strong><br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">var gulp = require(&apos;gulp&apos;);</div><div class="line"></div><div class="line">gulp.task(&apos;default&apos;, function() {  </div><div class="line">  // &#x5C06;&#x4F60;&#x7684;&#x9ED8;&#x8BA4;&#x7684;&#x4EFB;&#x52A1;&#x4EE3;&#x7801;&#x653E;&#x5728;&#x8FD9;</div><div class="line">  console.log(123);</div><div class="line">});</div></pre></td></tr></table></figure></p>
+<p>&#x201C;default&#x201D;&#x4E3A;&#x4EFB;&#x52A1;&#x540D;</p>
+<p><strong>e. &#x8FD0;&#x884C; gulp</strong><br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ gulp default</div></pre></td></tr></table></figure></p>
+<p>&#x6267;&#x884C;&#x7ED3;&#x679C;&#xFF1A;<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">[11:27:55] Starting &apos;default&apos;...</div><div class="line">123</div><div class="line">[11:27:55] Finished &apos;default&apos; after 848 &#x3BC;s</div></pre></td></tr></table></figure></p>
+<p>$ gulp<br>&#x9ED8;&#x8BA4;&#x7684;&#x540D;&#x4E3A; default &#x7684;&#x4EFB;&#x52A1;&#xFF08;task&#xFF09;&#x5C06;&#x4F1A;&#x88AB;&#x8FD0;&#x884C;</p>
+<p>&#x60F3;&#x8981;&#x5355;&#x72EC;&#x6267;&#x884C;&#x7279;&#x5B9A;&#x7684;&#x4EFB;&#x52A1;&#xFF08;task&#xFF09;&#xFF0C;&#x9700;&#x8F93;&#x5165; gulp <task> <othertask>&#x3002;</othertask></task></p>
+<blockquote>
+<p>cnpm &#x662F;&#x6DD8;&#x5B9D;&#x56E2;&#x961F;&#x5728;&#x56FD;&#x5185;&#x642D;&#x7684;&#x4E00;&#x4E2A;&#x5B8C;&#x6574;&#x7684;npmjs.org&#x7684;&#x955C;&#x50CF;&#xFF0C;&#x53EF;&#x4EE5;&#x4EE5;&#x6B64;&#x4EE3;&#x66FF;&#x5B98;&#x65B9;npm&#x7248;&#x672C;&#x3002;&#x7F51;&#x5740;&#xFF1A;<a href="http://npm.taobao.org&#xFF1B;&#x5B89;&#x88C5;&#xFF1A;npm" target="_blank" rel="external">http://npm.taobao.org&#xFF1B;&#x5B89;&#x88C5;&#xFF1A;npm</a> install cnpm -g &#x2013;registry=<a href="https://registry.npm.taobao.org&#xFF1B;&#x5B89;&#x88C5;&#x5B8C;&#x6210;&#xFF1A;cnpm" target="_blank" rel="external">https://registry.npm.taobao.org&#xFF1B;&#x5B89;&#x88C5;&#x5B8C;&#x6210;&#xFF1A;cnpm</a> -v&#x67E5;&#x770B;&#x7248;&#x672C;&#x53F7;</p>
+</blockquote>
+<h2 id="Gulp&#x7684;&#x4F7F;&#x7528;&#x4E4B;css-sprite"><a href="#Gulp&#x7684;&#x4F7F;&#x7528;&#x4E4B;css-sprite" class="headerlink" title="Gulp&#x7684;&#x4F7F;&#x7528;&#x4E4B;css sprite"></a>Gulp&#x7684;&#x4F7F;&#x7528;&#x4E4B;css sprite</h2><ol>
+<li><p>&#x5B89;&#x88C5;gulp.spritesmith&#x63D2;&#x4EF6;</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ cnpm install gulp.spritesmith</div></pre></td></tr></table></figure>
+</li>
+<li><p>&#x6839;&#x76EE;&#x5F55;&#x521B;&#x5EFA;gulpfile.js</p>
+</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">&apos;gulp&apos;</span>);</div><div class="line"><span class="keyword">var</span> spritesmith = <span class="built_in">require</span>(<span class="string">&apos;gulp.spritesmith&apos;</span>);</div><div class="line"></div><div class="line">gulp.task(<span class="string">&apos;sprite&apos;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>{</div><div class="line">  gulp.src(<span class="string">&apos;./src/img/*.png&apos;</span>)</div><div class="line">    .pipe(spritesmith({</div><div class="line">      <span class="attr">imgName</span>: <span class="string">&apos;icon.png&apos;</span>,  <span class="comment">//&#x53C2;&#x6570;&#xFF0C;&#x751F;&#x6210;&#x56FE;&#x7247;&#x6587;&#x4EF6;&#x540D;</span></div><div class="line">      cssName: <span class="string">&apos;icon.css&apos;</span>,  <span class="comment">//&#x53C2;&#x6570;&#xFF0C;&#x751F;&#x6210;&#x7684;&#x6837;&#x5F0F;&#x6587;&#x4EF6;&#x540D;</span></div><div class="line">      cssTemplate: <span class="string">&apos;./src/png_template.hbs&apos;</span>  <span class="comment">//&#x53C2;&#x6570;&#xFF0C;&#x6837;&#x5F0F;&#x6587;&#x4EF6;&#x6A21;&#x677F;&#x7684;&#x8DEF;&#x5F84;&#xFF0C;&#x9ED8;&#x8BA4;&#x4F7F;&#x7528;&#x7684;&#x662F;handlerbars&#x6A21;&#x677F;</span></div><div class="line">    }))</div><div class="line">    .pipe(gulp.dest(<span class="string">&apos;dist/img&apos;</span>));</div><div class="line">});</div></pre></td></tr></table></figure>
+<ol>
+<li><p>&#x5B9A;&#x4E49;&#x6837;&#x5F0F;&#x6587;&#x4EF6;&#x6A21;&#x677F;</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">// &#x4E3B;&#x8981;&#x589E;&#x52A0;&#x4E86;&#x4E00;&#x4E2A;&#x901A;&#x7528;&#x6837;&#x5F0F;&#xFF0C;&#x7ED9;&#x56FE;&#x6807;&#x8D4B;&#x4E88;&#x5185;&#x8054;&#x5757;&#x7EA7;&#x6837;&#x5F0F;</div><div class="line">.icon {</div><div class="line">  display: inline-block;</div><div class="line">}</div><div class="line">{{#sprites}}</div><div class="line">.icon-{{name}} {</div><div class="line">  background-image: url({{{escaped_image}}});</div><div class="line">  background-position: {{px.offset_x}} {{px.offset_y}};</div><div class="line">  width: {{px.width}};</div><div class="line">  height: {{px.height}};</div><div class="line">}</div><div class="line">{{/sprites}}</div></pre></td></tr></table></figure>
+</li>
+<li><p>&#x8FD0;&#x884C;&#x53CA;&#x7ED3;&#x679C;</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ gulp sprite</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>&#x6267;&#x884C;&#x7ED3;&#x679C;&#xFF1A;<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">[11:57:56] Using gulpfile D:\xxx\xxx\gulp\gulpfile.js</div><div class="line">[11:57:56] Starting &apos;png&apos;...</div><div class="line">[11:57:56] Finished &apos;png&apos; after 8.42 ms</div></pre></td></tr></table></figure></p>
+<p>&#x751F;&#x6210;&#x4E86;&#x4E24;&#x4E2A;&#x6587;&#x4EF6;icon.css&#x548C;icon.png</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">//icon.css</div><div class="line"></div><div class="line">.icon {</div><div class="line">  display: inline-block;</div><div class="line">}</div><div class="line">.icon-agenda {</div><div class="line">  background-image: url(icon.png);</div><div class="line">  background-position: 0px -64px;</div><div class="line">  width: 30px;</div><div class="line">  height: 31px;</div><div class="line">}</div><div class="line">.icon-airplane {</div><div class="line">  background-image: url(icon.png);</div><div class="line">  background-position: 0px 0px;</div><div class="line">  width: 32px;</div><div class="line">  height: 32px;</div><div class="line">}</div><div class="line">...</div></pre></td></tr></table></figure>
+<p>icon.png</p>
+<p><img src="http://dassec.b0.upaiyun.com/frontEnd/gulp/icon.png" alt="icon.png"></p>
+<p>&#x5728;html&#x4E2D;&#x4F7F;&#x7528;&#xFF1A;<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html&gt;</div><div class="line">&lt;head&gt;</div><div class="line">	&lt;title&gt;CSS Sprite&lt;/title&gt;</div><div class="line">	&lt;link rel=&quot;stylesheet&quot; href=&quot;./dist/png/icon.css&quot; charset=&quot;utf-8&quot;&gt;&lt;!--&#x5F15;&#x7528;&#x751F;&#x6210;&#x7684;css&#x6587;&#x4EF6;--&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body&gt;</div><div class="line">&lt;div&gt;</div><div class="line">    &lt;!--&#x76F4;&#x63A5;&#x7ED9;&#x6807;&#x7B7E;&#x6DFB;&#x52A0;&#x6837;&#x5F0F;&#x7C7B;--&gt;</div><div class="line">    &lt;i class=&quot;icon icon-agenda&quot;&gt;&lt;/i&gt;</div><div class="line">    &lt;i class=&quot;icon icon-airplane&quot;&gt;&lt;/i&gt;</div><div class="line">&lt;/div&gt;</div><div class="line">&lt;div&gt;</div><div class="line">	&lt;i class=&quot;icon icon-calendar&quot;&gt;&lt;/i&gt;</div><div class="line">&lt;/div&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure></p>
+<h2 id="Gulp&#x7684;&#x4F7F;&#x7528;&#x4E4B;&#x7F16;&#x8BD1;scss"><a href="#Gulp&#x7684;&#x4F7F;&#x7528;&#x4E4B;&#x7F16;&#x8BD1;scss" class="headerlink" title="Gulp&#x7684;&#x4F7F;&#x7528;&#x4E4B;&#x7F16;&#x8BD1;scss"></a>Gulp&#x7684;&#x4F7F;&#x7528;&#x4E4B;&#x7F16;&#x8BD1;scss</h2><ol>
+<li><p>&#x5B89;&#x88C5;gulp-sass</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ npm install --save-dev gulp-sass</div></pre></td></tr></table></figure>
+</li>
+<li><p>gulpfile.js &#x548C;scss&#x6587;&#x4EF6;</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">//&#x7F16;&#x8BD1;sass</div><div class="line">var gulp = require(&apos;gulp&apos;);</div><div class="line">const sass = require(&apos;gulp-sass&apos;); //scss&#x7F16;&#x8BD1;</div><div class="line">gulp.task(&apos;scss&apos;,()=&gt;{</div><div class="line">    gulp.src(&apos;src/css/scss/*.scss&apos;)</div><div class="line">    .pipe(sass())</div><div class="line">    .pipe(gulp.dest(&apos;dist/css&apos;)); //&#x5C06;&#x751F;&#x6210;&#x597D;&#x7684;css&#x6587;&#x4EF6;&#x653E;&#x5230;dist/css&#x6587;&#x4EF6;&#x5939;&#x4E0B;</div><div class="line">});</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">//index.scss</div><div class="line">$fontStack:    Helvetica, sans-serif;</div><div class="line">$primaryColor: #333;</div><div class="line">$bgColor: #AB9393;</div><div class="line"></div><div class="line">body {</div><div class="line">  font-family: $fontStack;</div><div class="line">  color: $primaryColor;</div><div class="line">  background-color:$bgColor;</div><div class="line">}</div></pre></td></tr></table></figure>
+<ol>
+<li>&#x8FD0;&#x884C;&#x53CA;&#x7ED3;&#x679C;<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ gulp scss</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>&#x751F;&#x6210;index.css&#x6587;&#x4EF6;<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">body {</div><div class="line">  font-family: Helvetica, sans-serif;</div><div class="line">  color: #333;</div><div class="line">  background-color: #AB9393; </div><div class="line">}</div></pre></td></tr></table></figure></p>
+<h2 id="Gulp&#x7684;&#x4F7F;&#x7528;&#x4E4B;&#x5B9E;&#x65F6;&#x5237;&#x65B0;"><a href="#Gulp&#x7684;&#x4F7F;&#x7528;&#x4E4B;&#x5B9E;&#x65F6;&#x5237;&#x65B0;" class="headerlink" title="Gulp&#x7684;&#x4F7F;&#x7528;&#x4E4B;&#x5B9E;&#x65F6;&#x5237;&#x65B0;"></a>Gulp&#x7684;&#x4F7F;&#x7528;&#x4E4B;&#x5B9E;&#x65F6;&#x5237;&#x65B0;</h2><p>&#x8FD9;&#x91CC;&#x4F7F;&#x7528;&#x5237;&#x65B0;&#x5DE5;&#x5177;browser-sync</p>
+<ol>
+<li><p>&#x5B89;&#x88C5;browser-sync&#x63D2;&#x4EF6;</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ npm install --save-dev browser-sync</div></pre></td></tr></table></figure>
+</li>
+<li><p>gulpfile.js</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">//&#x5B9E;&#x65F6;&#x66F4;&#x65B0;</div><div class="line">const browserSync = require(&apos;browser-sync&apos;).create(); //&#x5B9E;&#x65F6;&#x5237;&#x65B0;</div><div class="line">const reload = browserSync.reload;</div><div class="line">gulp.task(&apos;real-time&apos;,[&apos;scss&apos;],function () {</div><div class="line">    browserSync.init({</div><div class="line">        server:{</div><div class="line">            baseDir:&apos;./&apos;  //&#x8BBE;&#x7F6E;&#x670D;&#x52A1;&#x5668;&#x7684;&#x6839;&#x76EE;&#x5F55;</div><div class="line">        },</div><div class="line">        logLevel: &quot;debug&quot;,</div><div class="line">        logPrefix:&quot;dev&quot;,</div><div class="line">        browser:&apos;chrome&apos;,</div><div class="line">        notify:false //&#x5F00;&#x542F;&#x9759;&#x9ED8;&#x6A21;&#x5F0F;</div><div class="line">    });</div><div class="line">    //&#x4F7F;&#x7528;gulp&#x7684;&#x76D1;&#x542C;&#x529F;&#x80FD;&#xFF0C;&#x5B9E;&#x73B0;&#x7F16;&#x8BD1;&#x4FEE;&#x6539;&#x8FC7;&#x540E;&#x7684;&#x6587;&#x4EF6;</div><div class="line">    gulp.watch(&apos;src/css/scss/*.scss&apos;,[&apos;scss&apos;]);   </div><div class="line">    gulp.watch((&apos;*.html&apos;)).on(&apos;change&apos;,reload);</div><div class="line">});</div></pre></td></tr></table></figure>
+</li>
+<li><p>&#x8FD0;&#x884C;&#x53CA;&#x7ED3;&#x679C;</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ gulp real-time</div></pre></td></tr></table></figure>
+<p><img src="http://dassec.b0.upaiyun.com/frontEnd/gulp/real-time.gif" alt="&#x5B9E;&#x65F6;&#x5237;&#x65B0;"></p>
+<ol>
+<li>&#x5B58;&#x5728;&#x7684;&#x95EE;&#x9898;</li>
+</ol>
+<p>&#x4E0A;&#x9762;&#x6700;&#x540E;&#x4E24;&#x884C;&#x4EE3;&#x7801;<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">gulp.watch(&apos;src/css/scss/*.scss&apos;,[&apos;scss&apos;]);</div></pre></td></tr></table></figure></p>
+<p>&#x76D1;&#x542C;src/css/scss/&#x76EE;&#x5F55;&#x4E0B;&#x7684;&#x6240;&#x6709;scss&#x6587;&#x4EF6;&#xFF0C;&#x5982;&#x6709;&#x53D8;&#x52A8;&#x4FBF;&#x6267;&#x884C;scss&#x4EFB;&#x52A1;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">gulp.watch((&apos;*.html&apos;)).on(&apos;change&apos;,reload);</div></pre></td></tr></table></figure>
+<p>&#x76D1;&#x542C;&#x6240;&#x6709;html&#x6587;&#x4EF6;&#xFF0C;&#x5982;&#x6709;&#x53D8;&#x52A8;&#x5C31;&#x91CD;&#x65B0;&#x52A0;&#x8F7D;&#x3002;</p>
+<p>&#x95EE;&#x9898;&#xFF1A;&#x53EA;&#x6709;html&#x53D8;&#x52A8;&#xFF0C;&#x9875;&#x9762;&#x624D;&#x4F1A;&#x5B9E;&#x65F6;&#x5237;&#x65B0;&#x3002;&#x82E5;&#x53EA;css&#x53D8;&#x52A8;&#xFF0C;&#x800C;html&#x672A;&#x53D8;&#x52A8;&#xFF0C;&#x5219;&#x9875;&#x9762;&#x4E0D;&#x4F1A;&#x5B9E;&#x65F6;&#x5237;&#x65B0;&#x3002;&#x8FD9;&#x662F;&#x4EE3;&#x7801;&#x7684;&#x7F3A;&#x9677;&#xFF0C;&#x6682;&#x65F6;&#x6CA1;&#x80FD;&#x89E3;&#x51B3;&#x3002;</p>
+<p>&#x9644;&#x4E0A;&#x6211;&#x7684;&#x9879;&#x76EE;&#x76EE;&#x5F55;&#x7ED3;&#x6784;&#xFF1A;</p>
+<p><img src="http://dassec.b0.upaiyun.com/frontEnd/gulp/content.png" alt="&#x76EE;&#x5F55;&#x7ED3;&#x6784;"></p>
+<blockquote>
+<p>gulp&#x5E38;&#x7528;&#x5730;&#x5740;&#xFF1A;</p>
+<ol>
+<li>gulp&#x5B98;&#x65B9;&#x7F51;&#x5740;&#xFF1A;<a href="http://gulpjs.com" target="_blank" rel="external">http://gulpjs.com</a></li>
+<li>gulp&#x63D2;&#x4EF6;&#x5730;&#x5740;&#xFF1A;<a href="http://gulpjs.com/plugins" target="_blank" rel="external">http://gulpjs.com/plugins</a></li>
+<li>gulp &#x5B98;&#x65B9;API&#xFF1A;<a href="https://github.com/gulpjs/gulp/blob/master/docs/API.md" target="_blank" rel="external">https://github.com/gulpjs/gulp/blob/master/docs/API.md</a></li>
+<li>gulp &#x4E2D;&#x6587;API&#xFF1A;<a href="http://www.ydcss.com/archives/424" target="_blank" rel="external">http://www.ydcss.com/archives/424</a></li>
+</ol>
+</blockquote>
+<h2 id="&#x53C2;&#x8003;&#x6587;&#x6863;&#xFF1A;"><a href="#&#x53C2;&#x8003;&#x6587;&#x6863;&#xFF1A;" class="headerlink" title="&#x53C2;&#x8003;&#x6587;&#x6863;&#xFF1A;"></a>&#x53C2;&#x8003;&#x6587;&#x6863;&#xFF1A;</h2><ol>
+<li><p><a href="http://www.ydcss.com/archives/18" target="_blank" rel="external">http://www.ydcss.com/archives/18</a></p>
+</li>
+<li><p><a href="http://mp.weixin.qq.com/s?__biz=MzAxODE2MjM1MA==&amp;mid=2651551414&amp;idx=2&amp;sn=a44ef8abd9611adf49761902deaf085a&amp;chksm=8025a177b7522861c66bfc0c1a48439205e2cf0c0eac31b8eec6f68580d89c65b7d40a1fa3ce&amp;scene=4#wechat_redirect" target="_blank" rel="external">http://mp.weixin.qq.com/s?__biz=MzAxODE2MjM1MA==&amp;mid=2651551414&amp;idx=2&amp;sn=a44ef8abd9611adf49761902deaf085a&amp;chksm=8025a177b7522861c66bfc0c1a48439205e2cf0c0eac31b8eec6f68580d89c65b7d40a1fa3ce&amp;scene=4#wechat_redirect</a></p>
+</li>
+</ol>
+
+                <hr>
+                
+                <!-- 多说 Share start -->
+                <div class="ds-share"
+                     style="text-align: right"
+                     data-thread-key="2016/11/07/gulp/"
+                     data-title="Gulp初识及使用小例子"
+                     data-url="http://simmin.github.io/2016/11/07/gulp/"
+                     data-images=""
+                     data-content="
+&#x6240;&#x8C13;Gulp
+&#x5B98;&#x65B9;&#x5B9A;&... | Simmin&#39;s blog ">
+                    <div class="ds-share-inline">
+                        <ul class="ds-share-icons-16">
+                            <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
+                            <li><a class="ds-wechat flat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+                            <li><a class="ds-weibo flat" href="javascript:void(0);" data-service="weibo">微博</a></li>
+                            <li><a class="ds-douban flat" href="javascript:void(0);" data-service="douban">豆瓣</a></li>
+                        </ul>
+                        <div class="ds-share-icons-more">
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <!-- 多说 Share end-->
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2016/12/03/draw-dom-to-canvas/" data-toggle="tooltip" data-placement="top"
+                           title="将DOM对象绘制到canvas中">&larr; 上一篇</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2016/11/07/webpack/" data-toggle="tooltip" data-placement="top"
+                           title="Webpack初识">下一篇 &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+                <!-- 多说评论框 start -->
+                <div class="comment">
+                    <div class="ds-thread"
+                         data-thread-key="2016/11/07/gulp/"
+                         data-title="Gulp初识及使用小例子"
+                         data-url="http://simmin.github.io/2016/11/07/gulp/">
+                    </div>
+                </div>
+                <!-- 多说评论框 end -->
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#所谓Gulp"><span class="toc-text">所谓Gulp</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gulp的安装"><span class="toc-text">Gulp的安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-安装Node"><span class="toc-text">1. 安装Node</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-安装Gulp"><span class="toc-text">2. 安装Gulp</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gulp的使用之css-sprite"><span class="toc-text">Gulp的使用之css sprite</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gulp的使用之编译scss"><span class="toc-text">Gulp的使用之编译scss</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gulp的使用之实时刷新"><span class="toc-text">Gulp的使用之实时刷新</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考文档："><span class="toc-text">参考文档：</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+                <!-- Friends Blog -->
+                
+                <div style="margin-top: 20px;">
+                    <h5 class="text-center">FRIENDS</h5>
+                    <ul class="list-inline text-center">
+                        
+                        <li><a href="http://das.scusec.org/">小黑屋</a></li>
+                        
+                        <li><a href="http://wsyks.github.io/">我是_一棵树_</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    // dynamic User by Hux
+    var _user = 'simmin';
+
+    // duoshuo comment query.
+    var duoshuoQuery = {short_name: _user};
+    (function () {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';
+        ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/simmin">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Simmin 2017
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://simmin.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','null','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="http://ohsqunbzi.bkt.clouddn.com/simmin/bg-img/blog-head-img.png">
+</body>
+
+</html>
