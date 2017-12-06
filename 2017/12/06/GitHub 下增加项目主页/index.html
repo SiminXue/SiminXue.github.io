@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Simmin的个人博客">
+    <meta name="keyword" content="null">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="http://ohsqunbzi.bkt.clouddn.com/simmin/bg-img/favicon.png">
+    <link rel="alternate" type="application/atom+xml" title="Simmin" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        GitHub 下增加项目主页｜Simmin&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://simmin.github.io/2017/12/06/GitHub 下增加项目主页/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('http://ohsqunbzi.bkt.clouddn.com/blog-bg-black-run.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    Simmin
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="blog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">首页</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/Tags/">标签</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="http://ohsqunbzi.bkt.clouddn.com/simmin/bg-img/banner-bg.png">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('http://ohsqunbzi.bkt.clouddn.com/simmin/bg-img/banner-bg.png')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>GitHub 下增加项目主页</h1>
+                    
+                    <span class="meta">
+                         作者 Simmin
+                        <span>
+                          日期 2017-12-06
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#GitHub"
+                           title="GitHub">GitHub</a>
+                        
+                        <a class="tag" href="/tags/#GitHub Pages"
+                           title="GitHub Pages">GitHub Pages</a>
+                        
+                        <a class="tag" href="/tags/#gh-pages"
+                           title="gh-pages">gh-pages</a>
+                        
+                        <a class="tag" href="/tags/#github.io"
+                           title="github.io">github.io</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            GitHub 下增加项目主页
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>&#x4EE5;&#x6211;&#x4E2A;&#x4EBA;&#x4E3A;&#x4F8B;&#xFF0C;&#x5DF2;&#x7ECF;&#x5728;GitHub&#x4E0A;&#x901A;&#x8FC7;<strong>hexo</strong>&#x548C;<strong><username>.github.io</username></strong>&#x4ED3;&#x5E93;&#x5EFA;&#x7ACB;&#x4E86;&#x4E2A;&#x4EBA;&#x4E3B;&#x9875;&#xFF0C;&#x9996;&#x9875;&#x4E5F;&#x901A;&#x8FC7;<code>http://&lt;username&gt;.github.io</code>&#x80FD;&#x591F;&#x8BBF;&#x95EE;&#xFF0C;&#x4F46;&#x662F;&#x73B0;&#x5728;&#x60F3;&#x5EFA;&#x7ACB;&#x4E00;&#x4E2A;demo&#x9879;&#x76EE;&#x7528;&#x4E8E;&#x5C55;&#x793A;&#x535A;&#x5BA2;&#x4E2D;&#x63D0;&#x5230;&#x7684;&#x4F8B;&#x5B50;&#x3002;</p>
+<p>&#x672C;&#x5730;hexo&#x9879;&#x76EE;&#x76EE;&#x5F55;&#xFF1A;<br><img src="http://ohsqunbzi.bkt.clouddn.com/simmin/github-pages/hexo-pro-content.png" alt="hexo-pro-content"><br>&#x8FDC;&#x7A0B;GitHub&#x9879;&#x76EE;&#x76EE;&#x5F55;&#xFF1A;<br><img src="http://ohsqunbzi.bkt.clouddn.com/simmin/github-pages/github-pro-content.png" alt="github-pro-content"></p>
+<p>&#x4E5F;&#x5C31;&#x662F;&#x8BF4;&#x672C;&#x5730;&#x7F16;&#x8F91;&#x65F6;&#x7684;&#x76EE;&#x5F55;&#x548C;hexo&#x751F;&#x6210;&#x540E;push&#x5230;GitHub&#x4E0A;&#x5E76;&#x4E0D;&#x4E00;&#x6837;&#xFF0C;GitHub&#x4E0A;&#x7684;&#x9879;&#x76EE;&#x6587;&#x4EF6;&#x662F;&#x5176;&#x5B9E;&#x662F;hexo&#x9879;&#x76EE;&#x4E2D;&#x7684;<code>public</code>&#x6587;&#x4EF6;&#x5939;&#x4E2D;&#x7684;&#x6587;&#x4EF6;&#xFF0C;&#x4F46;&#x662F;hexo&#x6BCF;&#x66F4;&#x65B0;&#x4E00;&#x6B21;public&#x6587;&#x4EF6;&#x5939;&#x7684;&#x5185;&#x5BB9;&#x90FD;&#x4F1A;&#x91CD;&#x65B0;&#x751F;&#x6210;&#xFF0C;&#x56E0;&#x6B64;&#x6211;&#x4EEC;&#x65E0;&#x6CD5;&#x901A;&#x8FC7;&#x8BD5;&#x56FE;&#x5728;<code>public</code>&#x76EE;&#x5F55;&#x4E2D;&#x589E;&#x52A0;&#x6587;&#x4EF6;/&#x6587;&#x4EF6;&#x5939;&#x6765;&#x5B9E;&#x73B0;&#x6211;&#x4EEC;&#x7684;&#x76EE;&#x7684;&#x3002;</p>
+<p>&#x9996;&#x5148;&#xFF0C;&#x9700;&#x8981;&#x4E86;&#x89E3;&#x4E00;&#x4E0B;GitHub&#x4E0A;&#x521B;&#x5EFA;GitHub Pages&#x7684;&#x4E24;&#x79CD;&#x65B9;&#x5F0F;&#xFF1A;</p>
+<ol>
+<li><p>&#x901A;&#x8FC7;&#x521B;&#x5EFA;&#x540D;&#x4E3A;<strong><username>.github.io</username></strong>&#x7684;repo&#x521B;&#x5EFA;&#x4E2A;&#x4EBA;&#x4E3B;&#x9875;</p>
+<p>&#x8FD9;&#x6837;&#x521B;&#x5EFA;&#x7684;repo&#xFF0C;&#x5BF9;&#x5E94;&#x7684;&#x662F;master&#x5206;&#x652F;&#xFF0C;&#x4E00;&#x5207;&#x66F4;&#x6539;&#x4E5F;&#x5728;master&#x5206;&#x652F;&#x4E0A;&#x8FDB;&#x884C;&#x3002;&#x5BF9;&#x5916;&#x8BBF;&#x95EE;&#x94FE;&#x63A5;&#x76F4;&#x63A5;&#x4E3A;<code>http://&lt;username&gt;.github.io</code>&#x3002;&#x5982;&#x679C;&#x518D;&#x521B;&#x5EFA;gh-pages&#x5206;&#x652F;&#xFF0C;&#x90A3;&#x4E48;master&#x5206;&#x652F;&#x548C;gh-pages&#x4F1A;&#x81EA;&#x52A8;&#x540C;&#x6B65;&#xFF08;&#x7ECF;&#x8FC7;&#x6D4B;&#x8BD5;&#x731C;&#x6D4B;&#x5982;&#x6B64;&#xFF0C;&#x5E76;&#x4E0D;&#x4E00;&#x5B9A;&#x6B63;&#x786E;&#xFF09;&#x3002;</p>
+</li>
+<li><p>&#x901A;&#x8FC7;gh-pages&#x5206;&#x652F;&#x521B;&#x5EFA;&#x9879;&#x76EE;&#x4E3B;&#x9875;</p>
+<p> &#x65B0;&#x5EFA;&#x4EFB;&#x610F;&#x540D;&#x5B57;repo&#xFF08;&#x975E;<username>.github.io&#xFF09;&#xFF0C;&#x6BD4;&#x5982;project&#xFF0C;&#x65B0;&#x5EFA;gh-pages&#x5206;&#x652F;&#xFF0C;&#x4E00;&#x5207;&#x66F4;&#x6539;&#x5728;gh-pages&#x4E0A;&#x8FDB;&#x884C;&#x3002;&#x5BF9;&#x5916;&#x8BBF;&#x95EE;&#x94FE;&#x63A5;&#x4E3A;<code>http://&lt;username&gt;.github.io/project</code>&#x3002;</username></p>
+</li>
+</ol>
+<p>&#x73B0;&#x5728;&#x5982;&#x679C;&#x8981;&#x5B9E;&#x73B0;&#x6587;&#x7AE0;&#x5F00;&#x5934;&#x8BF4;&#x7684;&#x6548;&#x679C;&#xFF0C;&#x8003;&#x8651;&#x5230;&#x65B9;&#x5F0F;1&#x4E2D;master&#x5206;&#x652F;&#x548C;gh-pages&#x5206;&#x652F;&#x4F1A;&#x81EA;&#x52A8;&#x540C;&#x6B65;&#x7684;&#x95EE;&#x9898;&#xFF0C;&#x6240;&#x4EE5;&#x53EA;&#x80FD;&#x7528;&#x65B9;&#x5F0F;2&#xFF0C;&#x90A3;&#x4E48;&#x601D;&#x8DEF;&#x4E5F;&#x5C31;&#x6E05;&#x6670;&#x4E86;&#x3002;</p>
+<ol>
+<li><p>&#x65B0;&#x5EFA;&#x540D;&#x4E3A;blog-demo&#x7684;repo<br><img src="http://ohsqunbzi.bkt.clouddn.com/simmin/github-pages/create-repo.png" alt="create-repo"></p>
+</li>
+<li><p>&#x514B;&#x9686;&#x5230;&#x672C;&#x5730;</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">git <span class="built_in">clone</span> https://github.com/&lt;username&gt;/blog-demo.git</div></pre></td></tr></table></figure>
+</li>
+<li><p>&#x65B0;&#x5EFA;gh-pages&#x5206;&#x652F;</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">git checkout -b gh-pages</div></pre></td></tr></table></figure>
+</li>
+<li><p>&#x521B;&#x5EFA;demo.html</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">	blog-demo&#x4E0B;&#x7684;demo&#x9875;&#x9762;</div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>&#x540C;&#x6B65;&#x5230;&#x8FDC;&#x7A0B;&#x670D;&#x52A1;&#x5668;</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">git push origin gh-pages</div></pre></td></tr></table></figure>
+</li>
+<li><p>&#x901A;&#x8FC7;url&#x8BBF;&#x95EE;<br><img src="http://ohsqunbzi.bkt.clouddn.com/simmin/github-pages/demo.png" alt="demo"></p>
+</li>
+</ol>
+<p>&#x53C2;&#x8003;&#x6587;&#x7AE0;&#xFF1A;</p>
+<ol>
+<li><a href="https://segmentfault.com/a/1190000003946969" target="_blank" rel="external">&#x5355;&#x4E2A;GitHub&#x5E10;&#x53F7;&#x4E0B;&#x6DFB;&#x52A0;&#x591A;&#x4E2A;GitHub Pages&#x7684;&#x76F8;&#x5173;&#x95EE;&#x9898;</a></li>
+</ol>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/2017/08/30/three-columns/" data-toggle="tooltip" data-placement="top"
+                           title="三栏式布局-圣杯与双飞翼">下一篇 &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+                <!-- Friends Blog -->
+                
+                <div style="margin-top: 20px;">
+                    <h5 class="text-center">FRIENDS</h5>
+                    <ul class="list-inline text-center">
+                        
+                        <li><a href="http://das.scusec.org/">小黑屋</a></li>
+                        
+                        <li><a href="http://wsyks.github.io/">我是_一棵树_</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/simmin">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Simmin 2017
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://simmin.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','null','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="http://ohsqunbzi.bkt.clouddn.com/simmin/bg-img/blog-head-img.png">
+</body>
+
+</html>
